@@ -1,3 +1,6 @@
+using HorseRace.Data;
+using Microsoft.EntityFrameworkCore;
+
 namespace HorseRace
 {
     public class Program
@@ -6,10 +9,32 @@ namespace HorseRace
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+
+            //Dodawanie bazy danych
+            builder.Services.AddDbContext<HorseRaceContext>(options =>
+            options.UseSqlServer(builder.Configuration.GetConnectionString("HorseRaceContext")));
+            builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
+
+            // Tworzenie bazy danych jeœli nie istnieje
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                try
+                {
+                    var context = services.GetRequiredService<HorseRaceContext>();
+                    DbInitializer.Initialize(context);
+                }
+                catch (Exception ex)
+                {
+                    var logger = services.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(ex, "Wyst¹pi³ b³¹d przy tworzeniu bazy danych.");
+                }
+            }
+
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())

@@ -1,0 +1,90 @@
+﻿@model HorseRace.Models.Kon
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Kon</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Nazwa)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Nazwa)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Umaszczenie)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Umaszczenie)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Wytrzymalosc)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Wytrzymalosc)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.MaxWytrzymalosc)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.MaxWytrzymalosc)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Szybkosc)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Szybkosc)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.MaxSzybkosc)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.MaxSzybkosc)
+        </dd>
+    </dl>
+</div>
+
+<hr />
+
+@if (Model.Wyscigi != null && Model.Wyscigi.Any())
+{
+    <h4>Wyścigi, w których brał udział ten koń</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nazwa</th>
+                <th>Koszt</th>
+                <th>Nagroda</th>
+                <th>Poziom trudności</th>
+                <th>Czy zrealizowany</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var wyscig in Model.Wyscigi)
+            {
+                <tr>
+                    <td>@wyscig.Nazwa</td>
+                    <td>@wyscig.Koszt</td>
+                    <td>@wyscig.Nagroda</td>
+                    <td>@wyscig.PoziomTrudnosci</td>
+                    <td>@(wyscig.CzyZrealizowany ? "Tak" : "Nie")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p><em>Ten koń nie był jeszcze przypisany do żadnego wyścigu.</em></p>
+}
+
+<hr />
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
