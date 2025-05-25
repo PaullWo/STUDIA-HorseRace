@@ -1,0 +1,84 @@
+﻿
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-image: url('/images/Tlo.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-family: Tahoma;
+    font-weight: 500;
+}
+
+.okno_glowne {
+    background-image: url('/images/Okno1.png');
+    background-size: cover;
+    width: 1444px;
+    height: 841px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 19px;
+}
+.logo_glowne{
+
+}
+.okno_logowanie {
+    background: linear-gradient(180deg,rgba(168, 168, 168, 1) 0%, rgba(255, 255, 255, 1) 20%);
+    height: 460px;
+    width: 435px;
+    border: black solid 5px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-family: Tahoma;
+    font-weight: 500;
+}
+
+.btn_zaloguj {
+    width: 200px;
+    height: 50px;
+    border: black solid 4px;
+    border-radius: 20px;
+    font-family: Impact;
+    font-size: 26px;
+    background-color: #359b1d;
+    margin-bottom:20px;
+}
+
+.form_logowanie input {
+    border: black solid 3px;
+    border-radius: 20px;
+    width: 250px;
+    height: 45px;
+    margin-bottom: 10px;
+    font-size: 18px;
+    text-align:center;
+    background-color:#d9d9d9;
+}
+.okno_logowanie p {
+    margin-bottom: 20px;
+    font-size: 19px;
+}
+
+#powitanie {
+    font-size: 25px;
+    padding-bottom: 0px;
+}
+a{
+    text-decoration:none;
+    color:black;
+}

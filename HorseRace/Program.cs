@@ -53,7 +53,7 @@ namespace HorseRace
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=HorseRace}/{action=Index}/{id?}");
 
             app.Run();
         }
