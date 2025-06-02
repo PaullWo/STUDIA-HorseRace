@@ -1,0 +1,42 @@
+﻿@model IEnumerable<HorseRace.Models.Kon>
+
+@{
+    ViewData["Title"] = "Stajnia";
+}
+<div class="okno_glowne">
+    <img class="logo_glowne" src="~/images/Logo.png" />
+    <div class="okno_panelAdmin1">
+        <h2>Twoje konie</h2>
+
+        <a asp-action="DodajKonia" class="btn btn-success">Dodaj nowego konia</a>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nazwa</th>
+                    <th>Umaszczenie</th>
+                    <th>Wytrzymałość</th>
+                    <th>Szybkość</th>
+                    <th>Akcje</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var kon in Model)
+                {
+                    <tr>
+                        <td>@kon.Nazwa</td>
+                        <td>@kon.Umaszczenie</td>
+                        <td>@kon.MaxWytrzymalosc</td>
+                        <td>@kon.MaxSzybkosc</td>
+                        <td>
+                            <a asp-action="EdytujKonia" asp-route-id="@kon.Id" class="btn btn-warning btn-sm">Edytuj</a>
+                            <a asp-action="SzczegolyKonia" asp-route-id="@kon.Id" class="btn btn-info btn-sm">Szczegóły</a>
+                            <a asp-action="UsunKonia" asp-route-id="@kon.Id" class="btn btn-danger btn-sm">Usuń</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <a asp-controller="HorseRace" asp-action="PanelAdmin" style="font-weight:600;">Cofnij</a>
+    </div>
+</div>

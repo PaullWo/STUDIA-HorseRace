@@ -10,22 +10,22 @@ using HorseRace.Models;
 
 namespace HorseRace.Controllers
 {
-    public class KonieController : Controller
+    public class KonsController : Controller
     {
         private readonly HorseRaceContext _context;
 
-        public KonieController(HorseRaceContext context)
+        public KonsController(HorseRaceContext context)
         {
             _context = context;
         }
 
-        // GET: Konie
+        // GET: Kons
         public async Task<IActionResult> Index()
         {
             return View(await _context.Konie.ToListAsync());
         }
 
-        // GET: Konie/Details/5
+        // GET: Kons/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,8 +34,6 @@ namespace HorseRace.Controllers
             }
 
             var kon = await _context.Konie
-                .Include(s => s.Wyscigi)
-                .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (kon == null)
             {
@@ -45,18 +43,18 @@ namespace HorseRace.Controllers
             return View(kon);
         }
 
-        // GET: Konie/Create
+        // GET: Kons/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Konie/Create
+        // POST: Kons/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nazwa,Umaszczenie,Wytrzymalosc,MaxWytrzymalosc,Szybkosc,MaxSzybkosc")] Kon kon)
+        public async Task<IActionResult> Create([Bind("Id,Nazwa,Umaszczenie,MaxWytrzymalosc,MaxSzybkosc")] Kon kon)
         {
             if (ModelState.IsValid)
             {
@@ -67,7 +65,7 @@ namespace HorseRace.Controllers
             return View(kon);
         }
 
-        // GET: Konie/Edit/5
+        // GET: Kons/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -83,12 +81,12 @@ namespace HorseRace.Controllers
             return View(kon);
         }
 
-        // POST: Konie/Edit/5
+        // POST: Kons/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nazwa,Umaszczenie,Wytrzymalosc,MaxWytrzymalosc,Szybkosc,MaxSzybkosc")] Kon kon)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nazwa,Umaszczenie,MaxWytrzymalosc,MaxSzybkosc")] Kon kon)
         {
             if (id != kon.Id)
             {
@@ -118,7 +116,7 @@ namespace HorseRace.Controllers
             return View(kon);
         }
 
-        // GET: Konie/Delete/5
+        // GET: Kons/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -136,7 +134,7 @@ namespace HorseRace.Controllers
             return View(kon);
         }
 
-        // POST: Konie/Delete/5
+        // POST: Kons/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

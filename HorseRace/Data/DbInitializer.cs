@@ -11,17 +11,16 @@ namespace HorseRace.Data
         {
             context.Database.EnsureCreated();
 
-            // Look for any students.
             if (context.Konie.Any())
             {
-                return;   // DB has been seeded
+                return;  
             }
 
             var konie = new Kon[]
             {
-            new Kon{Nazwa="ToyotaYaris",Umaszczenie=Umaszczenie.Toyota,Wytrzymalosc=200,MaxWytrzymalosc=200,Szybkosc=70,MaxSzybkosc=70},
-            new Kon{Nazwa="Kasztanka",Umaszczenie=Umaszczenie.Brazowy,Wytrzymalosc=250,MaxWytrzymalosc=250,Szybkosc=50,MaxSzybkosc=50},
-            new Kon{Nazwa="Mustang",Umaszczenie=Umaszczenie.Czarny,Wytrzymalosc=150,MaxWytrzymalosc=150,Szybkosc=90,MaxSzybkosc=90}
+            new Kon{Nazwa="ToyotaYaris",Umaszczenie=Umaszczenie.Toyota,MaxWytrzymalosc=200,MaxSzybkosc=70},
+            new Kon{Nazwa="Kasztanka",Umaszczenie=Umaszczenie.Brazowy,MaxWytrzymalosc=250,MaxSzybkosc=50},
+            new Kon{Nazwa="Mustang",Umaszczenie=Umaszczenie.Czarny,MaxWytrzymalosc=150,MaxSzybkosc=90}
             };
             foreach (Kon k in konie)
             {

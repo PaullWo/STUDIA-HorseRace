@@ -15,7 +15,11 @@ namespace HorseRace
             options.UseSqlServer(builder.Configuration.GetConnectionString("HorseRaceContext")));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-            builder.Services.AddControllersWithViews();
+            builder.Services.AddControllersWithViews()
+                .AddViewOptions(options =>
+                {
+                    options.HtmlHelperOptions.ClientValidationEnabled = true;
+                });
 
             var app = builder.Build();
 

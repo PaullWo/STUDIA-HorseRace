@@ -1,68 +1,28 @@
-﻿namespace HorseRace.Models
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
+namespace HorseRace.Models
 {
     public class Kon
     {
-		//Id
-		private int _id;
-		public int Id
-		{
-			get { return _id; }
-			set { _id = value; }
-		}
+        public int Id { get; set; }
 
-		//Nazwa
-		private string _nazwa;
-		public string Nazwa
-		{
-			get { return _nazwa; }
-			set { _nazwa = value; }
-		}
+        [Required(ErrorMessage = "Pole 'Nazwa' jest wymagane.")]
+        public string Nazwa { get; set; }
 
-		//Umaszczenie -> enum
-		private Umaszczenie _umaszczenie;
-		public Umaszczenie Umaszczenie
-		{
-			get { return _umaszczenie; }
-			set { _umaszczenie = value; }
-		}
+        [Required(ErrorMessage = "Pole 'Umaszczenie' jest wymagane.")]
+        public Umaszczenie Umaszczenie { get; set; }
 
-		//Wytrzymałość
-		private int _wytrzymalosc;
-		public int Wytrzymalosc
-		{
-			get { return _wytrzymalosc; }
-			set { _wytrzymalosc = value; }
-		}
+        [Required(ErrorMessage = "Podaj maksymalną wytrzymałość.")]
+        [Range(1, int.MaxValue, ErrorMessage = "Wytrzymałość musi być większa od zera.")]
+        public int MaxWytrzymalosc { get; set; }
 
-		//Maksymalna wytrzymałość
-		private int _maxWytrzymalosc;
-		public int MaxWytrzymalosc
-		{
-			get { return _maxWytrzymalosc; }
-			set { _maxWytrzymalosc = value; }
-		}
+        [Required(ErrorMessage = "Podaj maksymalną szybkość.")]
+        [Range(1, int.MaxValue, ErrorMessage = "Szybkość musi być większa od zera.")]
+        public int MaxSzybkosc { get; set; }
 
-		//Szybkość
-		private int _szybkosc;
-		public int Szybkosc
-		{
-			get { return _szybkosc; }
-			set { _szybkosc = value; }
-		}
-
-		//Maksymalna szybkość
-		private int _maxSzybkosc;
-		public int MaxSzybkosc
-		{
-			get { return _maxSzybkosc; }
-			set { _maxSzybkosc = value; }
-		}
-
-        //Kolekcja wyscigow
+        [ValidateNever]
         public ICollection<Wyscig> Wyscigi { get; set; }
-
-
-
-
     }
 }

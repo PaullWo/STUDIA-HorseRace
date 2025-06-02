@@ -2,7 +2,7 @@
     ViewData["Title"] = "Logowanie";
 }
     <div class="okno_glowne">
-        <img class="logo_glowne" src="images/Logo.png" />
+        <img class="logo_glowne" src="~/images/Logo.png" />
         <div class="okno_logowanie">
         <span id="powitanie" style="font-weight:600;">
             Witaj na Grand Prix!
@@ -25,7 +25,11 @@
 
             @if (ViewBag.Error != null)
             {
-                <div style="color:red; margin-bottom:5px;" class="alert alert-danger mt-2">@ViewBag.Error</div>
+                <div style="color:red; margin-bottom:5px;" >@ViewBag.Error</div>
+            }
+            @if (TempData["RejestracjaSukces"] != null)
+            {
+                <div style="color:green; margin-bottom:5px;">@TempData["RejestracjaSukces"]</div>
             }
         Nie masz jeszcze konta? <a asp-controller="HorseRace" asp-action="Rejestracja" style="font-weight:600;">Zarejestruj się!</a>
 

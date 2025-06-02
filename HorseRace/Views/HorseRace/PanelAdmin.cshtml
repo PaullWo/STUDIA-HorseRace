@@ -1,5 +1,21 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    ViewData["Title"] = "Panel Admina";
 }
+<div class="okno_glowne">
+    <img class="logo_glowne" src="~/images/Logo.png" />
+    <div class="okno_panelAdmin1">
+        <span id="powitanie" style="font-weight:600;">
+            PANEL GRAND MASTERA
+        </span>
+        <p>
+            Wybierz dokąd chcesz się udać. <br />
+        </p>
+        <div class="div_przyciski">
+            <a style="background-color: #8A5630" asp-controller="HorseRace" asp-action="Stajnia" class="btn_przycisk">STAJNIA</a>
+            <a style="background-color:#555555" asp-controller="HorseRace" asp-action="Tor" class="btn_przycisk">TOR WYŚCIGOWY</a>
+        </div>
+        <a asp-controller="HorseRace" asp-action="Index" style="font-weight:600;">Cofnij</a>
+
+    </div>
+
+</div>
