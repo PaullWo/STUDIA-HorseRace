@@ -1,0 +1,26 @@
+﻿@model HorseRace.Models.Kon
+
+@{
+    ViewData["Title"] = "Usuń Konia";
+}
+
+<div class="okno_glowne">
+    <img class="logo_glowne" src="~/images/Logo.png" />
+    <div class="okno_panelAdmin1">
+        <h2>Czy na pewno chcesz usunąć tego konia?</h2>
+
+        <div>
+            <strong>Nazwa:</strong> @Model.Nazwa<br />
+            <strong>Umaszczenie:</strong> @Model.Umaszczenie<br />
+            <strong>Wytrzymałość:</strong> @Model.MaxWytrzymalosc<br />
+            <strong>Szybkość:</strong> @Model.MaxSzybkosc<br />
+        </div>
+
+        <form asp-action="UsunKonia" method="post">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="Id" />
+            <button type="submit" class="btn btn_usun">Usuń</button>
+            <a asp-action="Stajnia" class="btn btn-secondary">Anuluj</a>
+        </form>
+    </div>
+</div>

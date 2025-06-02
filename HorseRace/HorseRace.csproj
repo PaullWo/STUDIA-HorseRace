@@ -7,9 +7,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\images\konie\Bialy.png" />
+    <Content Remove="wwwroot\images\konie\Brazowy.png" />
+    <Content Remove="wwwroot\images\konie\Czarny.png" />
+    <Content Remove="wwwroot\images\konie\Czerwony.png" />
+    <Content Remove="wwwroot\images\konie\Toyota.png" />
     <Content Remove="wwwroot\images\Logo.png" />
     <Content Remove="wwwroot\images\Okno1.png" />
     <Content Remove="wwwroot\images\Tlo.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="wwwroot\images\konie\Czarny.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>
@@ -23,6 +34,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="wwwroot\images\konie\Bialy.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="wwwroot\images\konie\Brazowy.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="wwwroot\images\konie\Czerwony.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="wwwroot\images\konie\Toyota.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="wwwroot\images\Logo.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>

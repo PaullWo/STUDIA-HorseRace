@@ -6,9 +6,17 @@
 <div class="okno_glowne">
     <img class="logo_glowne" src="~/images/Logo.png" />
     <div class="okno_panelAdmin1">
-        <h2>Twoje konie</h2>
+        <form method="get" asp-action="Stajnia" class="form_filtr">
+            <input type="text" name="searchString" value="@ViewBag.SearchString" placeholder="Szukaj po nazwie..." />
+            <button type="submit">Szukaj</button>
+        </form>
 
-        <a asp-action="DodajKonia" class="btn btn-success">Dodaj nowego konia</a>
+        <p class="p_sortuj">
+            Sortuj według:
+            <a asp-action="Stajnia" asp-route-sortOrder="@ViewBag.NameSort" asp-route-searchString="@ViewBag.SearchString">Nazwa</a> |
+            <a asp-action="Stajnia" asp-route-sortOrder="@ViewBag.SpeedSort" asp-route-searchString="@ViewBag.SearchString">Szybkość</a>
+        </p>
+
 
         <table class="table">
             <thead>
@@ -37,6 +45,21 @@
                 }
             </tbody>
         </table>
+        <div>
+            Strony:
+            @for (int i = 1; i <= ViewBag.TotalPages; i++)
+            {
+                if (i == ViewBag.CurrentPage)
+                {
+                    <strong>@i</strong>
+                }
+                else
+                {
+                    <a asp-action="Stajnia" asp-route-page="@i" asp-route-sortOrder="@ViewBag.SortOrder" asp-route-searchString="@ViewBag.SearchString">@i</a>
+                }
+            }
+        </div>
+        <a asp-action="DodajKonia" class="btn btn-success"> >>Dodaj nowego konia<< </a>
         <a asp-controller="HorseRace" asp-action="PanelAdmin" style="font-weight:600;">Cofnij</a>
     </div>
 </div>

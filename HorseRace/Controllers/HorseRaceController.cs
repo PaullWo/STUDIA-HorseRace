@@ -79,7 +79,6 @@ namespace HorseRace.Controllers
             _context.Uzytkownicy.Add(nowyUzytkownik);
             _context.SaveChanges();
 
-            // przekierowanie np. do logowania
             TempData["RejestracjaSukces"] = "Rejestracja zakończona pomyślnie!.";
             return RedirectToAction("Index");
         }
@@ -99,12 +98,54 @@ namespace HorseRace.Controllers
         {
             return View();
         }
+
         [HttpGet]
-        public IActionResult Stajnia()
+        public IActionResult Stajnia(string searchString, string sortOrder, int page = 1, int pageSize = 5)
         {
-            var konie = _context.Konie.ToList();
-            return View(konie);
+            var konie = _context.Konie.AsQueryable();
+
+            // WYSZUKIWANIE
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                konie = konie.Where(k => k.Nazwa.Contains(searchString));
+            }
+
+            // SORTOWANIE
+            ViewBag.NameSort = sortOrder == "name_desc" ? "name_asc" : "name_desc";
+            ViewBag.SpeedSort = sortOrder == "speed_desc" ? "speed_asc" : "speed_desc";
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    konie = konie.OrderByDescending(k => k.Nazwa);
+                    break;
+                case "name_asc":
+                    konie = konie.OrderBy(k => k.Nazwa);
+                    break;
+                case "speed_desc":
+                    konie = konie.OrderByDescending(k => k.MaxSzybkosc);
+                    break;
+                case "speed_asc":
+                    konie = konie.OrderBy(k => k.MaxSzybkosc);
+                    break;
+                default:
+                    konie = konie.OrderBy(k => k.Id);
+                    break;
+            }
+
+            // STRONICOWANIE
+            var totalItems = konie.Count();
+            var konieNaStronie = konie.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+            ViewBag.TotalPages = (int)Math.Ceiling((double)totalItems / pageSize);
+            ViewBag.CurrentPage = page;
+            ViewBag.SearchString = searchString;
+            ViewBag.SortOrder = sortOrder;
+
+            return View(konieNaStronie);
         }
+
+
         [HttpGet]
         public IActionResult DodajKonia()
         {
@@ -125,8 +166,83 @@ namespace HorseRace.Controllers
 
            
             Console.WriteLine("BŁAD");
+            ViewBag.UmaszczenieList = new SelectList(Enum.GetValues(typeof(Umaszczenie)));
             return View(kon);
         }
+
+        [HttpGet]
+        public IActionResult EdytujKonia(int id)
+        {
+            var kon = _context.Konie.FirstOrDefault(k => k.Id == id);
+            if (kon == null)
+            {
+                return NotFound();
+            }
+
+            ViewBag.UmaszczenieList = new SelectList(Enum.GetValues(typeof(Umaszczenie)));
+            return View(kon);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EdytujKonia(int id, [Bind("Id,Nazwa,Umaszczenie,MaxWytrzymalosc,MaxSzybkosc")] Kon kon)
+        {
+            if (id != kon.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                _context.Update(kon);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Stajnia));
+            }
+
+            ViewBag.UmaszczenieList = new SelectList(Enum.GetValues(typeof(Umaszczenie)));
+            return View(kon);
+        }
+
+        [HttpGet]
+        public IActionResult UsunKonia(int id)
+        {
+            var kon = _context.Konie.FirstOrDefault(k => k.Id == id);
+            if (kon == null)
+            {
+                return NotFound();
+            }
+
+            return View(kon);
+        }
+
+        [HttpPost, ActionName("UsunKonia")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UsunKoniaPotwierdzone(int id)
+        {
+            var kon = await _context.Konie.FindAsync(id);
+            if (kon == null)
+            {
+                return NotFound();
+            }
+
+            _context.Konie.Remove(kon);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Stajnia));
+        }
+
+        [HttpGet]
+        public IActionResult SzczegolyKonia(int id)
+        {
+            var kon = _context.Konie.FirstOrDefault(k => k.Id == id);
+            if (kon == null)
+            {
+                return NotFound();
+            }
+
+            return View(kon);
+        }
+
+
 
 
 

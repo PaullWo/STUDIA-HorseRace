@@ -1,0 +1,24 @@
+﻿@model HorseRace.Models.Kon
+
+@{
+    ViewData["Title"] = "Szczegóły Konia";
+}
+
+<div class="okno_glowne">
+    <img class="logo_glowne" src="~/images/Logo.png" />
+    <div class="okno_panelAdmin1">
+        <h2>Szczegóły konia</h2>
+        <div class="div_szczegoly">
+            <div>
+                <p><strong>Nazwa:</strong> @Model.Nazwa</p>
+                <p><strong>Umaszczenie:</strong> @Model.Umaszczenie</p>
+                <p><strong>Wytrzymałość:</strong> @Model.MaxWytrzymalosc</p>
+                <p><strong>Szybkość:</strong> @Model.MaxSzybkosc</p>
+            </div>
+            <div>
+                <img class="zdj" src="~/images/konie/@($"{Model.Umaszczenie}.png")" alt="Koń" style="max-height: 200px;" />
+            </div>
+        </div>
+        <a asp-controller="HorseRace" asp-action="Stajnia" style="font-weight:600;">Cofnij</a>
+    </div>
+</div>

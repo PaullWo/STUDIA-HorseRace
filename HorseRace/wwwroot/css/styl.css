@@ -130,3 +130,129 @@ a{
     align-content: center;
     align-items: center;
 }
+
+/*Dodawanie konia*/
+.text-danger {
+    color: red;
+    margin: 10px;
+    font-size: 18px;
+}
+
+.label_dodaj {
+    border: black solid 2px;
+    border-radius: 20px;
+    width: 200px;
+    height: 30px;
+    font-size: 18px;
+    text-align: center;
+    background-color: #ffffff;
+}
+.form_dodaj {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    font-size: 18px;
+    gap: 5px;
+    background-color: rgba(168, 168, 168, 1);
+    border-radius: 20px;
+    border: black solid 2px;
+    padding: 10px 5px;
+}
+
+/*Stajnia*/
+.table {
+    background-color: rgba(168, 168, 168, 1);
+    border-radius: 20px;
+    border: black solid 2px;
+    padding: 10px 5px;
+    margin: 20px 5px;
+    font-size: 16px;
+    font-family: Tahoma;
+}
+.table td {
+    padding: 5px 5px;
+    border: black solid 2px;
+    border-radius: 10px;
+    background-color: white;
+}
+.table th {
+    padding: 5px 5px;
+    border: black solid 2px;
+    border-radius: 10px;
+    background-color: #359b1d;
+    font-family: Impact;
+    font-size: 18px;
+    font-weight:lighter;
+}
+.p_sortuj{
+    margin:0px;
+}
+.form_filtr {
+    margin: 0px;
+    margin-bottom: 10px;
+    display:flex;
+    gap:10px;
+}
+.form_filtr input{
+    border: black solid 2px;
+    border-radius: 15px;
+    width: 200px;
+    height: 25px;
+    font-size: 16px;
+    text-align: center;
+    font-family: Tahoma;
+    background-color: #ffffff;
+}
+.form_filtr button{
+    width: 130px;
+    height: 30px;
+    border: black solid 3px;
+    border-radius: 50px;
+    font-family: Impact;
+    font-size: 18px;
+    background-color: #359b1d;
+    text-align: center;
+    font-weight:lighter;
+}
+
+/*Usuwanie*/
+.btn_usun {
+    width: 150px;
+    height: 40px;
+    border: black solid 3px;
+    border-radius: 50px;
+    font-family: Impact;
+    font-size: 22px;
+    background-color: red;
+    margin: 20px;
+    text-align: center;
+    padding: 10px 5px;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+/*Szczegoly*/
+.div_szczegoly {
+    display: flex;
+    width: 470px;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    background-color: rgba(168, 168, 168, 1);
+    border-radius: 20px;
+    border: black solid 3px;
+    padding: 30px 20px;
+    margin: 20px 5px;
+    font-size: 18px;
+    text-align:left;
+}
+.zdj {
+    background-color: white;
+    padding: 10px;
+    border-radius: 20px;
+    border: black solid 2px;
+}
