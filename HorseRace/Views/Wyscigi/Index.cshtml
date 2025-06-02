@@ -1,0 +1,46 @@
+﻿@model IEnumerable<HorseRace.Models.Wyscig>
+
+@{
+    ViewData["Title"] = "Tor wyścigowy";
+}
+
+<div class="okno_glowne">
+    <img class="logo_glowne" src="~/images/Logo.png" />
+    <div class="okno_panelAdmin1">
+        <h2>Lista wyścigów</h2>
+
+        <a asp-controller="Wyscigi" asp-action="DodajWyscig" class="btn btn-success">Dodaj nowy wyścig</a>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nazwa</th>
+                    <th>Właściciel</th>
+                    <th>Koszt</th>
+                    <th>Nagroda</th>
+                    <th>Poziom trudności</th>
+                    <th>Akcje</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var wyscig in Model)
+                {
+                    <tr>
+                        <td>@wyscig.Nazwa</td>
+                        <td>@wyscig.Wlasciciel?.Login</td>
+                        <td>@wyscig.Koszt</td>
+                        <td>@wyscig.Nagroda</td>
+                        <td>@wyscig.PoziomTrudnosci</td>
+                        <td>
+                            <a asp-action="EdytujWyscig" asp-route-id="@wyscig.Id" class="btn btn-warning btn-sm">Edytuj</a>
+                            <a asp-action="SzczegolyWyscig" asp-route-id="@wyscig.Id" class="btn btn-info btn-sm">Szczegóły</a>
+                            <a asp-action="UsunWyscig" asp-route-id="@wyscig.Id" class="btn btn-danger btn-sm">Usuń</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <a asp-controller="HorseRace" asp-action="PanelAdmin" style="font-weight:600;">Cofnij</a>
+    </div>
+</div>

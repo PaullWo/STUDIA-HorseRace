@@ -1,4 +1,7 @@
-﻿namespace HorseRace.Models
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+namespace HorseRace.Models
 {
     public class Wyscig
     {
@@ -20,14 +23,16 @@
 
 		//Wlasciciel
 		private int _wlascicielId;
-		public int WlascicielId
+        [ValidateNever]
+        public int WlascicielId
 		{
 			get { return _wlascicielId; }
 			set { _wlascicielId = value; }
 		}
 
 		private Uzytkownik _wlasciciel;
-		public Uzytkownik Wlasciciel
+        [ValidateNever]
+        public Uzytkownik Wlasciciel
 		{
 			get { return _wlasciciel; }
 			set { _wlasciciel = value; }
@@ -49,13 +54,15 @@
 			set { _nagroda = value; }
 		}
 
-		//Kolekcja koni (botów) biorących udział w wyścigu
-		public ICollection<Kon> Konie { get; set; }
+        //Kolekcja koni (botów) biorących udział w wyścigu
+        [ValidateNever]
+        public ICollection<Kon> Konie { get; set; }
 
 
-		//Czy wyścig już się odbył
-		private bool _czyZrealizowany;
-		public bool CzyZrealizowany
+        //Czy wyścig już się odbył
+        private bool _czyZrealizowany;
+        [ValidateNever]
+        public bool CzyZrealizowany
 		{
 			get { return _czyZrealizowany; }
 			set { _czyZrealizowany = value; }

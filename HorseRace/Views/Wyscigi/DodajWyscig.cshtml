@@ -1,0 +1,69 @@
+﻿@model HorseRace.Models.Wyscig
+
+@{
+    ViewData["Title"] = "Dodaj Wyścig";
+    var konie = ViewBag.Konie as List<SelectListItem>;
+}
+
+<div class="okno_glowne">
+    <img class="logo_glowne" src="~/images/Logo.png" />
+    <div class="okno_panelAdmin1">
+        <h2>Dodaj nowy wyścig</h2>
+
+        <form asp-action="DodajWyscig" method="post">
+            @Html.AntiForgeryToken()
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="Nazwa" class="control-label">Nazwa wyścigu:</label>
+                <input asp-for="Nazwa" class="form-control" />
+                <span asp-validation-for="Nazwa" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Koszt" class="control-label">Koszt za udział:</label>
+                <input asp-for="Koszt" class="form-control" />
+                <span asp-validation-for="Koszt" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Nagroda" class="control-label">Nagroda:</label>
+                <input asp-for="Nagroda" class="form-control" />
+                <span asp-validation-for="Nagroda" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="PoziomTrudnosci" class="control-label">Poziom trudności:</label>
+                <select asp-for="PoziomTrudnosci" class="form-control"
+                        asp-items="Html.GetEnumSelectList<PoziomTrudnosci>()">
+                    <option value="">-- wybierz poziom --</option>
+                </select>
+                <span asp-validation-for="PoziomTrudnosci" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label>Wybierz 5 koni biorących udział:</label>
+                <select name="wybraneKonie" class="form-control" multiple>
+                    @foreach (var kon in konie)
+                    {
+                        <option value="@kon.Value">@kon.Text</option>
+                    }
+                </select>
+                @if (ViewBag.KonieError != null)
+                {
+                    <span class="text-danger">@ViewBag.KonieError</span>
+                }
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Dodaj Wyścig" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Anuluj</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
