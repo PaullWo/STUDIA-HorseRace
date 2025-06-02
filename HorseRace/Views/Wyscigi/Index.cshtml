@@ -6,10 +6,9 @@
 
 <div class="okno_glowne">
     <img class="logo_glowne" src="~/images/Logo.png" />
-    <div class="okno_panelAdmin1">
-        <h2>Lista wyścigów</h2>
-
-        <a asp-controller="Wyscigi" asp-action="DodajWyscig" class="btn btn-success">Dodaj nowy wyścig</a>
+    <div class="okno_panelAdmin1" style="width:750px;">
+        <a asp-controller="Wyscigi" asp-action="Statystyka" class="a_statystyka">STATYSTKA</a>
+        <a asp-controller="Wyscigi" asp-action="DodajWyscig" class="btn btn-success"> >>Dodaj nowy wyścig<< </a>
 
         <table class="table">
             <thead>
@@ -28,8 +27,8 @@
                     <tr>
                         <td>@wyscig.Nazwa</td>
                         <td>@wyscig.Wlasciciel?.Login</td>
-                        <td>@wyscig.Koszt</td>
-                        <td>@wyscig.Nagroda</td>
+                        <td>@wyscig.Koszt $</td>
+                        <td>@wyscig.Nagroda $</td>
                         <td>@wyscig.PoziomTrudnosci</td>
                         <td>
                             <a asp-action="EdytujWyscig" asp-route-id="@wyscig.Id" class="btn btn-warning btn-sm">Edytuj</a>

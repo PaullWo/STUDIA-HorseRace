@@ -1,5 +1,35 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model HorseRace.Models.Wyscig
+
 @{
+    ViewData["Title"] = "Szczegóły wyścigu";
 }
+
+<div class="okno_glowne">
+    <img class="logo_glowne" src="~/images/Logo.png" />
+    <div class="okno_panelAdmin1">
+        <h2>Szczegóły wyścigu: @Model.Nazwa</h2>
+        <div class="div_szczegoly">
+            <div>
+                <p><strong>Właściciel:</strong> @Model.Wlasciciel.Login</p>
+                <p><strong>Koszt:</strong> @Model.Koszt $</p>
+                <p><strong>Nagroda:</strong> @Model.Nagroda $</p>
+                <p><strong>Poziom trudności:</strong> @Model.PoziomTrudnosci</p>
+                <p><strong>Czy zrealizowany:</strong> @(Model.CzyZrealizowany ? "Tak" : "Nie")</p>
+            </div>
+            <div>
+                <strong>Konie biorące udział:</strong>
+                <ul style="background-color:#359b1d;border-radius:20px;border:2px solid black; padding-top:15px;padding-bottom:15px;">
+                        @foreach (var kon in Model.Konie)
+                        {
+                            <li>
+                            <a asp-controller="HorseRace" asp-action="SzczegolyKonia" asp-route-id="@kon.Id">
+                                    @kon.Nazwa
+                                </a>
+                            </li>
+                        }
+                    </ul>
+            </div>
+        </div>
+        <a asp-action="Index" style="font-weight:600;">Cofnij</a>
+    </div>
+</div>

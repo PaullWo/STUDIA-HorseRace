@@ -1,0 +1,19 @@
+﻿@{
+    ViewData["Title"] = "Statystyka";
+}
+
+<div class="okno_glowne">
+    <img class="logo_glowne" src="~/images/Logo.png" />
+    <div class="okno_panelAdmin1">
+        <h2>Statystyki Wyścigów</h2>
+        <div class="div_szczegoly" style="flex-direction:column;padding:0px;">
+            <p><strong>Łączna liczba wyścigów:</strong> @ViewBag.LiczbaWyscigow</p>
+            <p><strong>Średnia nagroda:</strong> @ViewBag.SredniaNagroda $</p>
+            <p><strong>Liczba zrealizowanych wyścigów:</strong> @ViewBag.Zrealizowane</p>
+            <p><strong>Średnia prędkość koni:</strong> @ViewBag.SredniaPredkosc km/h</p>
+            <p><strong>Średnia wytrzymałość koni</strong> @ViewBag.SredniaWytrzymalosc ml/kg/min</p>
+        </div>
+
+        <a asp-action="Index" style="font-weight:600;">Cofnij</a>
+    </div>
+</div>

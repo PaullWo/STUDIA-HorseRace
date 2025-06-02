@@ -256,3 +256,34 @@ a{
     border-radius: 20px;
     border: black solid 2px;
 }
+
+/*Dodaj wyscig*/
+.div_dodaj2{
+    display:flex;
+    width:700px;
+    height:300px;
+    align-items:center;
+    padding:20px;
+    font-family:Tahoma;
+}
+
+.dodaj_multiple {
+    width: 250px;
+    height: 100px;
+    font-size: 18px;
+    font-family: Tahoma;
+    
+}
+.a_statystyka {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    font-size: 26px;
+    font-family:Impact;
+    gap: 5px;
+    background-color: #359b1d;
+    border-radius: 20px;
+    border: black solid 3px;
+    padding: 10px 5px;
+    margin-bottom:20px;
+}

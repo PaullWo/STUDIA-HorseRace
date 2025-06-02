@@ -1,5 +1,73 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model HorseRace.Models.Wyscig
+
 @{
+    ViewData["Title"] = "Edytuj Wyścig";
+    var konie = ViewBag.Konie as List<SelectListItem>;
+}
+
+<div class="okno_glowne">
+    <img class="logo_glowne" src="~/images/Logo.png" />
+    <div class="okno_panelAdmin1" style="width:800px;height:550px;">
+        <h2>Edytuj wyścig</h2>
+
+        <form asp-action="EdytujWyscig" method="post" class="form_dodaj" style="width:700px;height:350px;">
+            <input type="hidden" asp-for="Id" />
+            <div class="div_dodaj2">
+                <div>
+                    @Html.AntiForgeryToken()
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="form-group">
+                        <label asp-for="Nazwa" class="control-label">Nazwa wyścigu:</label>
+                        <input asp-for="Nazwa" class="label_dodaj" /><br />
+                        <span asp-validation-for="Nazwa" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Koszt" class="control-label">Koszt $:</label>
+                        <input asp-for="Koszt" class="label_dodaj" /><br />
+                        <span asp-validation-for="Koszt" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Nagroda" class="control-label">Nagroda $:</label>
+                        <input asp-for="Nagroda" class="label_dodaj" /><br />
+                        <span asp-validation-for="Nagroda" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="PoziomTrudnosci" class="control-label">Poziom trudności:</label>
+                        <select asp-for="PoziomTrudnosci" class="label_dodaj"
+                                asp-items="Html.GetEnumSelectList<PoziomTrudnosci>()">
+                        </select><br />
+                        <span asp-validation-for="PoziomTrudnosci" class="text-danger"></span>
+                    </div>
+                </div>
+                <div style="width:250px;margin-left:50px;">
+                    <div class="form-group">
+                        <label>Wybierz 5 zawodników:</label>
+                        <select name="wybraneKonie" class="form-control dodaj_multiple" multiple>
+                            @foreach (var kon in konie)
+                            {
+                                <option value="@kon.Value" selected="@kon.Selected">@kon.Text</option>
+                            }
+                        </select><br />
+                        @if (ViewBag.KonieError != null)
+                        {
+                            <span class="text-danger">@ViewBag.KonieError</span>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Zapisz zmiany" class="btn btn-primary btn_zaloguj" />
+                <a asp-action="Index" class="btn btn-secondary">Anuluj</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
 }

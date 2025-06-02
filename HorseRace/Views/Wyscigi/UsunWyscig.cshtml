@@ -1,0 +1,25 @@
+﻿@model HorseRace.Models.Wyscig
+
+@{
+    ViewData["Title"] = "Usuń wyścig";
+}
+
+<div class="okno_glowne">
+    <img class="logo_glowne" src="~/images/Logo.png" />
+    <div class="okno_panelAdmin1">
+        <h2>Czy na pewno chcesz usunąć ten wyścig?</h2>
+
+        <div>
+            <strong>Nazwa:</strong> @Model.Nazwa<br />
+            <strong>Koszt:</strong> @Model.Koszt $ <br />
+            <strong>Nagroda:</strong> @Model.Nagroda $<br />
+            <strong>Poziom trudności:</strong> @Model.PoziomTrudnosci<br />
+        </div>
+
+        <form asp-action="UsunWyscig" method="post">
+            <input type="hidden" asp-for="Id" />
+            <button type="submit" class="btn btn_usun">Usuń</button>
+            <a asp-action="Index" class="btn btn-secondary">Anuluj</a>
+        </form>
+    </div>
+</div>

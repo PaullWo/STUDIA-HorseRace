@@ -153,5 +153,7 @@ namespace HorseRace.Controllers
         {
             return _context.Konie.Any(e => e.Id == id);
         }
+
+        
     }
 }
