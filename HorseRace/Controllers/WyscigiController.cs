@@ -197,8 +197,8 @@ namespace HorseRace.Controllers
             ViewBag.LiczbaWyscigow = liczbaWyscigow;
             ViewBag.SredniaNagroda = sredniaNagroda;
             ViewBag.Zrealizowane = liczbaZrealizowanych;
-            ViewBag.SredniaPredkosc = sredniaPredkosc;
-            ViewBag.SredniaWytrzymalosc = sredniaWytrzymalosc;
+            ViewBag.SredniaPredkosc = Math.Round(sredniaPredkosc);
+            ViewBag.SredniaWytrzymalosc = Math.Round(sredniaWytrzymalosc);
             return View();
         }
 
