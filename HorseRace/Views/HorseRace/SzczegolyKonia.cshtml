@@ -14,6 +14,17 @@
                 <p><strong>Umaszczenie:</strong> @Model.Umaszczenie</p>
                 <p><strong>Wytrzymałość:</strong> @Model.MaxWytrzymalosc</p>
                 <p><strong>Szybkość:</strong> @Model.MaxSzybkosc</p>
+                <strong>Wyścigi, w których startuje:</strong>
+                <ul>
+                    @foreach (var wyscig in Model.Wyscigi)
+                    {
+                        <li>
+                            <a asp-controller="Wyscigi" asp-action="SzczegolyWyscig" asp-route-id="@wyscig.Id">
+                                @wyscig.Nazwa
+                            </a>
+                        </li>
+                    }
+                </ul>
             </div>
             <div>
                 <img class="zdj" src="~/images/konie/@($"{Model.Umaszczenie}.png")" alt="Koń" style="max-height: 200px;" />

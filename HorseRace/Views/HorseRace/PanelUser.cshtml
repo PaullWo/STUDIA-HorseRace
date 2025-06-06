@@ -1,14 +1,26 @@
-﻿@{
-    ViewData["Title"] = "Panel Admina";
+﻿@model HorseRace.Models.Uzytkownik
+@{
+    ViewData["Title"] = "Gra";
 }
 <div class="okno_glowne">
-    <img class="logo_glowne" src="~/images/Logo.png" />
-    <div class="okno_logowanie">
+    <div class="okno_gra">
+        <div class="menu">
+            <div class="pusty">
+
+            </div>
+            <div class="div_logo">
+                <img class="logo_mniejsze" src="~/images/Logo.png" />
+            </div>
+            <div class="ikonki">
+                <div class="ikonka_kasa"><img src="/images/podkowa.png" class="zlota_podkowa"/> 100</div>
+                <a asp-controller="HorseRace" asp-action="Index" class="ikonka_wyloguj">Wyloguj</a>
+            </div>
+        </div>
+        <div class="user_body">
         <p>
             Budowa toru w toku .... <br />
         </p>
-        <a asp-controller="HorseRace" asp-action="Index" style="font-weight:600;">Cofnij</a>
-
+        </div>
     </div>
 
 </div>

@@ -24,5 +24,12 @@ namespace HorseRace.Models
 
         [ValidateNever]
         public ICollection<Wyscig> Wyscigi { get; set; }
+
+        //Wlasciciel
+        public int WlascicielId { get; set; }
+
+        [ValidateNever]
+        public Uzytkownik Wlasciciel { get; set; }
+
     }
 }

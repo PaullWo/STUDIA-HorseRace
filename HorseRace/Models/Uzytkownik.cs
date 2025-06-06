@@ -2,6 +2,11 @@
 {
     public class Uzytkownik
     {
+		public Uzytkownik()
+		{
+            CzyMaKonia = false; // Domyślna wartość
+            Wyscigi = new List<Wyscig>();
+        }
 		//Id
 		private int _id;
 		public int Id
@@ -44,5 +49,14 @@
 
 		//Kolekcja wyścigów
 		public ICollection<Wyscig> Wyscigi { get; set; }
+
+		private bool _czyMaKonia;
+
+		public bool CzyMaKonia
+		{
+			get { return _czyMaKonia; }
+			set { _czyMaKonia = value; }
+		}
+
 	}
 }

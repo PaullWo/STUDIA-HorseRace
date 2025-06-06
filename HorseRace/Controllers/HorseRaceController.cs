@@ -2,6 +2,7 @@
 using HorseRace.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace HorseRace.Controllers
 {
@@ -35,13 +36,42 @@ namespace HorseRace.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("PanelUser", "HorseRace");
+                    if (uzytkownik.CzyMaKonia == false)
+                    {
+                        return RedirectToAction("NowyUserPanel", "HorseRace", new { id = uzytkownik.Id });
+                    }
+                    else {
+                        return RedirectToAction("PanelUser", "HorseRace", new { id = uzytkownik.Id });
+                    }
                 }
             }
             ViewBag.Error = "Nieprawidłowy login lub hasło.";
             return View();
         }
-
+        [HttpGet]
+        public IActionResult NowyUserPanel(int id)
+        {
+            var uzytkownik = _context.Uzytkownicy.FirstOrDefault(u => u.Id == id);
+            return View(uzytkownik);
+        }
+        [HttpPost]
+        public IActionResult NowyUserPanel(int id,string WybranyKolor,string nazwa)
+        {
+            var uzytkownik = _context.Uzytkownicy.FirstOrDefault(u => u.Id == id);
+            if (uzytkownik == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                Umaszczenie umaszczenie = Enum.Parse<Umaszczenie>(WybranyKolor);
+                Kon kon = new Kon { Nazwa = nazwa, Umaszczenie = umaszczenie, MaxWytrzymalosc = 100, MaxSzybkosc = 100, Wlasciciel=uzytkownik };
+                _context.Konie.Add(kon);
+                uzytkownik.CzyMaKonia = true;
+                _context.SaveChanges();
+            }
+                return RedirectToAction("PanelUser", "HorseRace", new { id = uzytkownik.Id });
+        }
         [HttpGet]
         public IActionResult Rejestracja()
         {
@@ -84,7 +114,7 @@ namespace HorseRace.Controllers
         }
 
         [HttpGet]
-        public IActionResult PanelAdmin()
+        public IActionResult PanelAdmin(int id)
         {
             return View();
         }
@@ -159,6 +189,8 @@ namespace HorseRace.Controllers
         {
             if (ModelState.IsValid)
             {
+                var admin = _context.Uzytkownicy.FirstOrDefault(u => u.Login == "admin");
+                kon.Wlasciciel = admin;
                 _context.Add(kon);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Stajnia));
@@ -194,7 +226,15 @@ namespace HorseRace.Controllers
 
             if (ModelState.IsValid)
             {
-                _context.Update(kon);
+                var konZBazy = await _context.Konie.FindAsync(id);
+                if (konZBazy == null)
+                {
+                    return NotFound();
+                }
+                konZBazy.Nazwa = kon.Nazwa;
+                konZBazy.Umaszczenie = kon.Umaszczenie;
+                konZBazy.MaxWytrzymalosc = kon.MaxWytrzymalosc;
+                konZBazy.MaxSzybkosc = kon.MaxSzybkosc;
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Stajnia));
             }
@@ -231,14 +271,17 @@ namespace HorseRace.Controllers
         }
 
         [HttpGet]
-        public IActionResult SzczegolyKonia(int id)
+        public async Task<IActionResult> SzczegolyKonia(int id)
         {
             var kon = _context.Konie.FirstOrDefault(k => k.Id == id);
             if (kon == null)
             {
                 return NotFound();
             }
-
+            var wyscigi = await _context.Konie
+            .Include(w => w.Wyscigi)
+            .FirstOrDefaultAsync(w => w.Id == id);
+            ViewBag.WyscigiList = wyscigi;
             return View(kon);
         }
 

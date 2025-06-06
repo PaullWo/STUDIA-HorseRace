@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HorseRace.Migrations
 {
     [DbContext(typeof(HorseRaceContext))]
-    [Migration("20250526175632_RemoveOldFields")]
-    partial class RemoveOldFields
+    [Migration("20250606204811_FixCascadeIssue")]
+    partial class FixCascadeIssue
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -46,7 +46,12 @@ namespace HorseRace.Migrations
                     b.Property<int>("Umaszczenie")
                         .HasColumnType("int");
 
+                    b.Property<int>("WlascicielId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("WlascicielId");
 
                     b.ToTable("Kon", (string)null);
                 });
@@ -60,6 +65,9 @@ namespace HorseRace.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("CzyAdmin")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("CzyMaKonia")
                         .HasColumnType("bit");
 
                     b.Property<DateTime>("DataDolaczenia")
@@ -127,6 +135,17 @@ namespace HorseRace.Migrations
                     b.ToTable("KonWyscig");
                 });
 
+            modelBuilder.Entity("HorseRace.Models.Kon", b =>
+                {
+                    b.HasOne("HorseRace.Models.Uzytkownik", "Wlasciciel")
+                        .WithMany()
+                        .HasForeignKey("WlascicielId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Wlasciciel");
+                });
+
             modelBuilder.Entity("HorseRace.Models.Wyscig", b =>
                 {
                     b.HasOne("HorseRace.Models.Uzytkownik", "Wlasciciel")
@@ -143,13 +162,13 @@ namespace HorseRace.Migrations
                     b.HasOne("HorseRace.Models.Kon", null)
                         .WithMany()
                         .HasForeignKey("KonieId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("HorseRace.Models.Wyscig", null)
                         .WithMany()
                         .HasForeignKey("WyscigiId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 

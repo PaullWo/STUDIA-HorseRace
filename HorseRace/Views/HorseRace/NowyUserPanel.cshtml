@@ -1,0 +1,46 @@
+﻿@model HorseRace.Models.Uzytkownik
+
+@{
+    ViewData["Title"] = "Wybór konia";
+}
+
+<div class="okno_glowne">
+    <img class="logo_glowne" src="~/images/Logo.png" />
+    <div class="okno_logowanie" style="width:800px;height:500px;">
+        <span id="powitanie" style="font-weight:600;">
+            Witaj w HorseRace @Model.Login !
+            <br />
+            
+        </span>
+        Nie masz jeszcze konia... ale spokojnie – czas to zmienić!<br />
+        Wybierz swojego rumaka i ruszaj po sławę!
+        <br />
+        <form asp-action="NowyUserPanel" method="post" class="form_logowanie">
+            <input type="hidden" name="id" value="@Model.Id" />
+            <div class="form-group">
+                <input type="text" class="kon_input" name="nazwa" id="nazwa" required placeholder="Nazwa Konia" />
+            </div>
+            <div class="wybor_konia">
+                @foreach (var kolor in new[] { "Bialy", "Brazowy", "Czarny", "Czerwony", "Toyota" })
+                {
+                    <div class="wybor_konia1">
+                        <input type="radio" name="WybranyKolor" value="@kolor" required />
+                        <br />
+                        <img src="~/images/konie/@($"{kolor}.png")" alt="@kolor" width="100" />
+                        <div>@kolor</div>
+                    </div>
+                }
+            </div>
+            <br />
+            <button type="submit" class="btn_zaloguj">WYBIERZ</button>
+        </form>
+
+        @if (ViewBag.Error != null)
+        {
+            <div style="color:red; margin-bottom:5px;" class="alert alert-danger mt-2">@ViewBag.Error</div>
+        }
+        <a asp-controller="HorseRace" asp-action="Index" style="font-weight:600;">Cofnij do logowania</a>
+
+    </div>
+
+</div>

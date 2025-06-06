@@ -16,11 +16,26 @@ namespace HorseRace.Data
                 return;  
             }
 
+            var uzytkownicy = new Uzytkownik[]
+            {
+            new Uzytkownik{Login="admin",Haslo="admin",CzyAdmin=true,CzyMaKonia=true,DataDolaczenia=DateTime.Parse("2025-05-25")},
+            new Uzytkownik{Login="user",Haslo="user",CzyAdmin=false,CzyMaKonia=false,DataDolaczenia=DateTime.Parse("2025-05-25")}
+            };
+            foreach (Uzytkownik u in uzytkownicy)
+            {
+                context.Uzytkownicy.Add(u);
+            }
+            context.SaveChanges();
+
+            var admin = context.Uzytkownicy.FirstOrDefault(u => u.Login == "admin");
+
             var konie = new Kon[]
             {
-            new Kon{Nazwa="ToyotaYaris",Umaszczenie=Umaszczenie.Toyota,MaxWytrzymalosc=200,MaxSzybkosc=70},
-            new Kon{Nazwa="Kasztanka",Umaszczenie=Umaszczenie.Brazowy,MaxWytrzymalosc=250,MaxSzybkosc=50},
-            new Kon{Nazwa="Mustang",Umaszczenie=Umaszczenie.Czarny,MaxWytrzymalosc=150,MaxSzybkosc=90}
+            new Kon{Nazwa="ToyotaYaris",Umaszczenie=Umaszczenie.Toyota,MaxWytrzymalosc=200,MaxSzybkosc=70,Wlasciciel=admin},
+            new Kon{Nazwa="Kasztanka",Umaszczenie=Umaszczenie.Brazowy,MaxWytrzymalosc=250,MaxSzybkosc=50,Wlasciciel=admin},
+            new Kon{Nazwa="Mustang",Umaszczenie=Umaszczenie.Czarny,MaxWytrzymalosc=150,MaxSzybkosc=90,Wlasciciel=admin},
+            new Kon{Nazwa="RB21",Umaszczenie=Umaszczenie.Czerwony,MaxWytrzymalosc=200,MaxSzybkosc=90,Wlasciciel=admin},
+            new Kon{Nazwa="White McQueen",Umaszczenie=Umaszczenie.Bialy,MaxWytrzymalosc=180,MaxSzybkosc=80,Wlasciciel=admin}
             };
             foreach (Kon k in konie)
             {
@@ -28,15 +43,6 @@ namespace HorseRace.Data
             }
             context.SaveChanges();
 
-            var uzytkownicy = new Uzytkownik[]
-            {
-            new Uzytkownik{Login="admin",Haslo="admin",CzyAdmin=true,DataDolaczenia=DateTime.Parse("2025-05-25")}
-            };
-            foreach (Uzytkownik u in uzytkownicy)
-            {
-                context.Uzytkownicy.Add(u);
-            }
-            context.SaveChanges();
 
             var wyscigi = new Wyscig[]
             {

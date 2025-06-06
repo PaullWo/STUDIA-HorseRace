@@ -19,6 +19,17 @@ namespace HorseRace.Data
             modelBuilder.Entity<Kon>().ToTable("Kon");
             modelBuilder.Entity<Uzytkownik>().ToTable("Uzytkownik");
             modelBuilder.Entity<Wyscig>().ToTable("Wyscig");
+
+            // Konfiguracja relacji wiele-do-wielu bez Cascade Delete
+            modelBuilder.Entity<Kon>()
+                .HasMany(k => k.Wyscigi)
+                .WithMany(w => w.Konie)
+                .UsingEntity<Dictionary<string, object>>(
+                    "KonWyscig", // nazwa tabeli pośredniej
+                    j => j.HasOne<Wyscig>().WithMany().HasForeignKey("WyscigiId").OnDelete(DeleteBehavior.Restrict),
+                    j => j.HasOne<Kon>().WithMany().HasForeignKey("KonieId").OnDelete(DeleteBehavior.Restrict)
+                );
         }
+
     }
 }
