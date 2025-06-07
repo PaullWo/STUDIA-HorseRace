@@ -80,7 +80,15 @@
                                         @wyscig.Nagroda <img src="/images/podkowa.png" class="zlota_podkowa" style="height:15px" />
                                         </span>
                                     </div>
+                                @if (Model.ZlotePodkowy >= wyscig.Koszt)
+                                {
                                     <a asp-action="Wyscig" asp-route-id="@Model.Id" asp-route-wyscigID="@wyscig.Id" class="btn_udzial">WEŹ UDZIAŁ</a>
+                                }
+                                else
+                                {
+                                    <a style="pointer-events: none; opacity: 0.5;" class="btn_udzial">WEŹ UDZIAŁ</a>
+                                }
+
                                 </div>
                             }
 

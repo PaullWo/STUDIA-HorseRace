@@ -463,7 +463,7 @@ namespace HorseRace.Controllers
             {
                 return NotFound();
             }
-
+            uzytkownik.ZlotePodkowy -= wyscig.Koszt;
             wyscig.Konie.Add(kon);
             _context.SaveChanges();
 
@@ -472,6 +472,52 @@ namespace HorseRace.Controllers
 
             ViewBag.Wyscig = wyscig;
 
+            return View(uzytkownik);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Wyniki(int id, int wyscigId, int zwyciezcaId)
+        {
+            var uzytkownik = _context.Uzytkownicy.FirstOrDefault(k => k.Id == id);
+            if (uzytkownik == null)
+            {
+                return NotFound();
+            }
+
+            var wyscig = _context.Wyscigi
+            .Include(w => w.Konie)
+            .FirstOrDefault(w => w.Id == wyscigId);
+            if (wyscig == null)
+            {
+                return NotFound();
+            }
+            ViewBag.Wyscig = wyscig;
+            var kon = _context.Konie.FirstOrDefault(k => k.WlascicielId == id);
+            if (uzytkownik == null)
+            {
+                return NotFound();
+            }
+            if (zwyciezcaId == 5)
+            {
+                ViewBag.Komunikat1 = "Gratulacje! Twój koń wygrał wyścig!";
+                ViewBag.Komunikat2 = "Wygrywasz złote podkowy, oraz łapiesz doświadczenie.<br>" +
+                    "<strong>+" + wyscig.Nagroda + " <img src='/images/podkowa.png' style='height: 18px;' /></strong><br>" +
+                    "<strong>+40 km/h</strong><br><strong>+20 ml/kg/min</strong><br>";
+                kon.LiczbaWygranychWyscigow += 1;
+                kon.MaxSzybkosc += 40;
+                kon.MaxWytrzymalosc +=20;
+                uzytkownik.ZlotePodkowy += wyscig.Nagroda;
+            }
+            else
+            {
+                ViewBag.Komunikat1 = "Porażka! Twój koń przegrał wyścig...";
+                ViewBag.Komunikat2 = "Tracisz złote podkowy, ale łapiesz doświadczenie.<br>" +
+                    "<strong>-"+wyscig.Koszt+ " <img src='/images/podkowa.png' style='height: 18px;' /></strong><br>" +
+                    "<strong>+20 km/h</strong><br><strong>+10 ml/kg/min</strong><br>";
+                kon.MaxSzybkosc += 20;
+                kon.MaxWytrzymalosc += 10;
+            }
+            _context.SaveChanges();
             return View(uzytkownik);
         }
     }

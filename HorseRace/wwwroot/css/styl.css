@@ -410,6 +410,7 @@ a{
     border-radius: 50px;
     padding: 20px;
     background: linear-gradient(180deg,#cccccc 0%, rgb(242, 241, 241) 60%);
+    background-color:white;
 }
 .div_info {
     display: flex;
@@ -696,7 +697,6 @@ a{
     position: absolute;
     left: 20px;
     top:0px;
-    z-index: 5;
 }
 .torW-0, .torW-1, .torW-2, .torW-3, .torW-4, .torW-5 {
     position: relative;
@@ -747,4 +747,47 @@ a{
     text-align:center;
     font-family:Impact;
     font-weight:100;
+    z-index:5;
+}
+.div_wynik {
+    background-color: #b4b4b4;
+    border: black solid 4px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    margin-bottom:30px;
+    height:75%;
+    width:50%;
+}
+.wynik_body {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+.div_wynik div {
+    background-color: white;
+    border: black solid 4px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    height: 100%;
+    width: 70%;
+    padding:20px;
+}
+.wynik_tytul{
+    font-family:Impact;
+    font-weight:400;
+    margin-bottom:0px;
 }

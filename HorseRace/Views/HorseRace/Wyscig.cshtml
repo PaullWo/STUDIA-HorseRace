@@ -99,13 +99,16 @@
 
                 // Ruch konia
                 let staty = konieStats[i];
-                aktualnaWytrzymalosc[i] = Math.max(0, aktualnaWytrzymalosc[i] - 10);
+                aktualnaWytrzymalosc[i] = Math.max(0, aktualnaWytrzymalosc[i] - 5);
                 let procentWytrzymalosci = aktualnaWytrzymalosc[i] / staty.wytrzymalosc;
                 let bazowa = staty.szybkosc * procentWytrzymalosci;
                 let losoweBonusy = Math.random() * 20;
                 let predkosc = Math.floor(bazowa + losoweBonusy);
                 if (i === playerIndex && aktualnaWytrzymalosc[i] < 20) {
                     pokazKomunikat("Twój koń ledwo zipie...");
+                }
+                if(!przeszkody[i] && i==playerIndex){
+                    pokazKomunikat("Nie zatrzymujesz się!");
                 }
                 if(!przeszkody[i]){
                     pozycje[i] += predkosc;
@@ -119,8 +122,8 @@
                 przeszkodaImg.style.visibility= "hidden";
 
             if (pozycje[i] >= meta) {
-                alert("Koniec wyścigu! Wygrał koń " + i);
                 clearInterval(wyscigInterval);
+                window.location.href = `/HorseRace/Wyniki?id=${@Model.Id}&wyscigId=${@wyscig.Id}&zwyciezcaId=${i}`;
                 return;
             }
 
@@ -132,7 +135,6 @@
         document.getElementById("skok").disabled = true;
         const przeszkodaImg = document.getElementById("przeszkoda-" + playerIndex);
         if (przeszkodaImg) przeszkodaImg.style.visibility= "hidden";
-        pokazKomunikat("Przeskoczyłeś przeszkodę! Nie zatrzymujesz się!");
     }
 
     function uzyjBenzyny() {
