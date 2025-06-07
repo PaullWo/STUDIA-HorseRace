@@ -1,9 +1,10 @@
-﻿using HorseRace.Data;
+﻿using BibliotekaWspolna;
+using HorseRace.Data;
 using HorseRace.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-
+using System.Reflection;
 namespace HorseRace.Controllers
 {
     public class HorseRaceController : Controller
@@ -120,7 +121,7 @@ namespace HorseRace.Controllers
             return View();
         }
         [HttpGet]
-        public IActionResult PanelUser(int id, string sortOrder= "", int page = 1, int pageSize = 3)
+        public IActionResult PanelUser(int id, string sortOrder = "", int page = 1, int pageSize = 3)
         {
             var uzytkownik = _context.Uzytkownicy.FirstOrDefault(u => u.Id == id);
             if (uzytkownik == null)
@@ -443,7 +444,7 @@ namespace HorseRace.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Wyscig(int id,int wyscigID)
+        public async Task<IActionResult> Wyscig(int id, int wyscigID)
         {
             var uzytkownik = _context.Uzytkownicy.FirstOrDefault(k => k.Id == id);
             if (uzytkownik == null)
@@ -491,6 +492,7 @@ namespace HorseRace.Controllers
             {
                 return NotFound();
             }
+            wyscig.CzyZrealizowany = true;
             ViewBag.Wyscig = wyscig;
             var kon = _context.Konie.FirstOrDefault(k => k.WlascicielId == id);
             if (uzytkownik == null)
@@ -505,20 +507,98 @@ namespace HorseRace.Controllers
                     "<strong>+40 km/h</strong><br><strong>+20 ml/kg/min</strong><br>";
                 kon.LiczbaWygranychWyscigow += 1;
                 kon.MaxSzybkosc += 40;
-                kon.MaxWytrzymalosc +=20;
+                kon.MaxWytrzymalosc += 20;
                 uzytkownik.ZlotePodkowy += wyscig.Nagroda;
             }
             else
             {
                 ViewBag.Komunikat1 = "Porażka! Twój koń przegrał wyścig...";
                 ViewBag.Komunikat2 = "Tracisz złote podkowy, ale łapiesz doświadczenie.<br>" +
-                    "<strong>-"+wyscig.Koszt+ " <img src='/images/podkowa.png' style='height: 18px;' /></strong><br>" +
+                    "<strong>-" + wyscig.Koszt + " <img src='/images/podkowa.png' style='height: 18px;' /></strong><br>" +
                     "<strong>+20 km/h</strong><br><strong>+10 ml/kg/min</strong><br>";
                 kon.MaxSzybkosc += 20;
                 kon.MaxWytrzymalosc += 10;
             }
             _context.SaveChanges();
             return View(uzytkownik);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Wtyczki()
+        {
+            var adminId = _context.Uzytkownicy
+            .Where(u => u.Login == "admin")
+            .Select(u => u.Id)
+            .FirstOrDefault();
+            string nazwaPakietu = "";
+            string pluginsPath = Path.Combine(AppContext.BaseDirectory, "Plugins");
+            var konieZDll = new List<KonPodstawowy>();
+
+            if (Directory.Exists(pluginsPath))
+            {
+                var dllPaths = Directory.GetFiles(pluginsPath, "*.dll");
+
+                foreach (var dll in dllPaths)
+                {
+                    try
+                    {
+                        var asm = Assembly.LoadFrom(dll);
+                        var typy = asm.GetTypes()
+                            .Where(t => typeof(IListaKoni).IsAssignableFrom(t) && !t.IsInterface && !t.IsAbstract);
+
+                        foreach (var typ in typy)
+                        {
+                            if (Activator.CreateInstance(typ) is IListaKoni instancja)
+                            {
+                                konieZDll.AddRange(instancja.zwrocKonie());
+                                var attr = typ.GetCustomAttribute<InfoAttribute>();
+                                nazwaPakietu = attr?.NazwaPakietu ?? "Nieznany pakiet";
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Błąd ładowania DLL {dll}: {ex.Message}");
+                    }
+                }
+
+                foreach (var konDll in konieZDll)
+                {
+                    bool czyIstnieje = _context.Konie.Any(k =>
+                        k.Nazwa == konDll.Nazwa &&
+                        k.MaxSzybkosc == konDll.MaxSzybkosc &&
+                        k.MaxWytrzymalosc == konDll.MaxWytrzymalosc &&
+                        k.Umaszczenie == konDll.Umaszczenie &&
+                        k.WlascicielId == adminId
+                    );
+
+                    if (!czyIstnieje)
+                    {
+                        var nowyKon = new Kon
+                        {
+                            Nazwa = konDll.Nazwa,
+                            MaxSzybkosc = konDll.MaxSzybkosc,
+                            MaxWytrzymalosc = konDll.MaxWytrzymalosc,
+                            Umaszczenie = konDll.Umaszczenie,
+                            WlascicielId = adminId
+                        };
+
+                        _context.Konie.Add(nowyKon);
+                        Console.WriteLine($"===[PAKIET]: {nazwaPakietu} – załadowano konia.===");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"===[PAKIET]: {nazwaPakietu} – pominięto duplikat konia: {konDll.Nazwa}===");
+                    }
+                }
+
+                _context.SaveChanges();
+
+                Console.WriteLine($"===Dodano {konieZDll.Count} koni z pakietów DLL.===");
+                return RedirectToAction("PanelAdmin");
+            }
+
+            return View();
         }
     }
 }

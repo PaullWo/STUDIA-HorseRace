@@ -97,4 +97,8 @@
     <Folder Include="Migrations\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BibliotekaWspolna\BibliotekaWspolna.csproj" />
+  </ItemGroup>
+
 </Project>

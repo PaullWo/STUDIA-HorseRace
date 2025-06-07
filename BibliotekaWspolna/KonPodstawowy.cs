@@ -1,16 +1,18 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using BibliotekaWspolna;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace HorseRace.Models
+namespace BibliotekaWspolna
 {
-    public class Kon : KonPodstawowy
+    public class KonPodstawowy
     {
-        public Kon() {
-            LiczbaWygranychWyscigow = 0;
+        public KonPodstawowy()
+        {
+            
         }
-        /*
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Pole 'Nazwa' jest wymagane.")]
@@ -26,18 +28,6 @@ namespace HorseRace.Models
         [Required(ErrorMessage = "Podaj maksymalną szybkość.")]
         [Range(1, int.MaxValue, ErrorMessage = "Szybkość musi być większa od zera.")]
         public int MaxSzybkosc { get; set; }
-        */
-        [ValidateNever]
-        public ICollection<Wyscig> Wyscigi { get; set; }
-
-        //Wlasciciel
-        public int WlascicielId { get; set; }
-
-        [ValidateNever]
-        public int LiczbaWygranychWyscigow { get; set; }
-
-        [ValidateNever]
-        public Uzytkownik Wlasciciel { get; set; }
 
     }
 }
