@@ -19,9 +19,11 @@
     <Content Remove="wwwroot\images\podium.png" />
     <Content Remove="wwwroot\images\podkowa.png" />
     <Content Remove="wwwroot\images\praca.png" />
+    <Content Remove="wwwroot\images\przeszkoda.png" />
     <Content Remove="wwwroot\images\puchar.png" />
     <Content Remove="wwwroot\images\Tlo.png" />
     <Content Remove="wwwroot\images\tlo2.png" />
+    <Content Remove="wwwroot\images\tor.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -74,6 +76,9 @@
     <Resource Include="wwwroot\images\praca.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="wwwroot\images\przeszkoda.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="wwwroot\images\puchar.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
@@ -81,6 +86,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="wwwroot\images\tlo2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="wwwroot\images\tor.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

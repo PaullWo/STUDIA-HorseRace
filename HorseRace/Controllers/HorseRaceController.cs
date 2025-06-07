@@ -451,11 +451,24 @@ namespace HorseRace.Controllers
                 return NotFound();
             }
 
-            var wyscig = _context.Wyscigi.FirstOrDefault(k => k.Id == id);
+            var wyscig = _context.Wyscigi
+            .Include(w => w.Konie)
+            .FirstOrDefault(w => w.Id == wyscigID);
             if (wyscig == null)
             {
                 return NotFound();
             }
+            var kon = _context.Konie.FirstOrDefault(k => k.WlascicielId == id);
+            if (uzytkownik == null)
+            {
+                return NotFound();
+            }
+
+            wyscig.Konie.Add(kon);
+            _context.SaveChanges();
+
+            var konie = _context.Konie.Where(k => wyscig.Konie.Contains(k)).ToList();
+            ViewBag.Konie = konie;
 
             ViewBag.Wyscig = wyscig;
 

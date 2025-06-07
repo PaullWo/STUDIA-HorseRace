@@ -655,3 +655,96 @@ a{
     align-items: center;
     flex-direction: row;
 }
+
+.tor_body {
+    background-image: url(/images/tor.png);
+    background-position: center center;
+    padding: 0px;
+    background-size: 102% 102%;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+.okno_tor {
+    background-image: url(/images/flaga.jpg);
+    background-size: auto;
+    background-position: center;
+    border: black solid 5px;
+}
+.podpis_nazwa {
+    font-family: Impact;
+    font-size: 14px;
+    font-weight: 500;
+    background-color: white;
+    border: black solid 2px;
+    border-radius: 20px;
+    padding:0px 10px;
+    margin-bottom:5px;
+}
+.konW-0, .konW-1, .konW-2, .konW-3, .konW-4, .konW-5{
+    position: absolute;
+    left: 20px;
+    top: 0px;
+    top: -45px;
+    width: 120px;
+}
+#przeszkoda-0, #przeszkoda-1, #przeszkoda-2, #przeszkoda-3, #przeszkoda-4, #przeszkoda-5 {
+    visibility: hidden;
+    position: absolute;
+    left: 20px;
+    top:0px;
+    z-index: 5;
+}
+.torW-0, .torW-1, .torW-2, .torW-3, .torW-4, .torW-5 {
+    position: relative;
+    height: 50px;
+    width: 1200px;
+    margin-top: 40px;
+}
+.torW-2 {
+    margin-top: 38px;
+}
+.torW-3 {
+    margin-top: 38px;
+}
+.torW-4 {
+    margin-top: 33px;
+}
+.torW-5{
+    margin-top: 32px;
+}
+.panel_gracza {
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    gap:30px;
+}
+.btn_gra {
+    width: 150px;
+    height: 40px;
+    border: black solid 3px;
+    border-radius: 20px;
+    font-family: Impact;
+    font-size: 18px;
+    background: linear-gradient(180deg,#FFFFFF 0%, rgb(128, 128, 128) 100%);
+    background-color:#359b1d;
+    margin: 10px;
+}
+.p_komunikat {
+    background-color: white;
+    border: black solid 3px;
+    border-radius: 20px;
+    width:70%;
+    min-height:20px;
+    font-size:16px;
+    padding:3px;
+    text-align:center;
+    font-family:Impact;
+    font-weight:100;
+}

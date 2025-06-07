@@ -2,8 +2,10 @@
 
 @{
     ViewData["Title"] = "Wyścig";
+    var wyscig = ViewBag.Wyscig as HorseRace.Models.Wyscig;
+    var konieWyscigu = ViewBag.Konie as List<HorseRace.Models.Kon>;
 }
-<div class="okno_glowne">
+<div class="okno_glowne okno_tor">
     <div class="okno_gra">
         <div class="menu">
             <div class="pusty">
@@ -16,9 +18,170 @@
                 <a asp-controller="HorseRace" asp-action="Index" class="ikonka_wyloguj">WYLOGUJ SIĘ</a>
             </div>
         </div>
-        <div class="user_body">
-            
+        <div class="user_body tor_body">
+            <div class="panel_gracza">
+                <button onclick="uzyjBenzyny()" id="benzyna" class="btn_gra">Wypij benzyne</button>
+                <button onclick="uzyjSmaru()" id="smar" class="btn_gra">Wylej smar</button>
+                <button onclick="przeskoczPrzeszkode()" id="skok" class="btn_gra" disabled>Skocz!</button>
+            </div>
+            <div id="tor">
+                <!-- Tory -->
+                @for (int i = 0; i < konieWyscigu.Count; i++)
+                {
+                    <div class="torW-@i">
+                        <div id="konW-@i" class="konW-@i">
+                            <strong class="podpis_nazwa">@(konieWyscigu[i].Nazwa)</strong><br />
+                            <img class="kon" id="kon-@i" src="~/images/konie/@(konieWyscigu[i].Umaszczenie).png" style="left: 0px;height:65px;" />
+                        </div>
+                        <img class="przeszkoda" id="przeszkoda-@i" src="~/images/przeszkoda.png" style="left: 0px;" />
+                    </div>
+                }
+            </div>
+            <p id="komunikat" class="p_komunikat"></p>
         </div>
     </div>
 
 </div>
+
+<script>
+    let pozycje = Array(@konieWyscigu.Count).fill(0);
+    let przeszkody = Array(@konieWyscigu.Count).fill(false);
+    let meta = 1100;
+    let rundy = 0;
+    let playerIndex = 5;
+    let boostUzyty = false;
+    let smarUzyty = false;
+
+    let konieStats = [
+    @foreach (var kon in konieWyscigu)
+    {
+            <text>{ szybkosc: @kon.MaxSzybkosc, wytrzymalosc: @kon.MaxWytrzymalosc },</text>
+    }
+    ];
+    let aktualnaWytrzymalosc = konieStats.map(k => k.wytrzymalosc);
+
+
+    function losujPrzeszkody() {
+        for (let i = 0; i < @konieWyscigu.Count; i++) {
+            przeszkody[i] = Math.random() < 0.2;
+
+            const przeszkodaImg = document.getElementById("przeszkoda-" + i);
+            if (przeszkodaImg) {
+                if (przeszkody[i]) {
+                    console.log(pozycje[i]);
+                    console.log((pozycje[i] + 50));
+                    przeszkodaImg.style.left = (pozycje[i] + 100) + "px";
+                    przeszkodaImg.style.visibility= "visible";
+                } else {
+                    przeszkodaImg.style.visibility= "hidden";
+                }
+            }
+        }
+
+        document.getElementById("skok").disabled = !przeszkody[playerIndex];
+        setTimeout(wykonajRunde, 1000);
+    }
+
+    function wykonajRunde() {
+        rundy++;
+
+        for (let i = 0; i < @konieWyscigu.Count; i++) {
+            // Skok botow przez przeszkode
+            if (przeszkody[i]) {
+                if (i === playerIndex){
+                    pokazKomunikat("Nie przeskoczyłeś przeszkody! Stoisz..");
+                }else{
+                    if (Math.random() < 0.5){
+                        przeszkody[i]=false;
+                    }
+                }
+            }
+
+                // Ruch konia
+                let staty = konieStats[i];
+                aktualnaWytrzymalosc[i] = Math.max(0, aktualnaWytrzymalosc[i] - 10);
+                let procentWytrzymalosci = aktualnaWytrzymalosc[i] / staty.wytrzymalosc;
+                let bazowa = staty.szybkosc * procentWytrzymalosci;
+                let losoweBonusy = Math.random() * 20;
+                let predkosc = Math.floor(bazowa + losoweBonusy);
+                if (i === playerIndex && aktualnaWytrzymalosc[i] < 20) {
+                    pokazKomunikat("Twój koń ledwo zipie...");
+                }
+                if(!przeszkody[i]){
+                    pozycje[i] += predkosc;
+
+                    let kon = document.getElementById("konW-" + i);
+                    if (kon) {
+                        kon.style.left = pozycje[i] + "px";
+                    }
+                }
+                const przeszkodaImg = document.getElementById("przeszkoda-" + i);
+                przeszkodaImg.style.visibility= "hidden";
+
+            if (pozycje[i] >= meta) {
+                alert("Koniec wyścigu! Wygrał koń " + i);
+                clearInterval(wyscigInterval);
+                return;
+            }
+
+        }
+    }
+
+    function przeskoczPrzeszkode() {
+        przeszkody[playerIndex] = false;
+        document.getElementById("skok").disabled = true;
+        const przeszkodaImg = document.getElementById("przeszkoda-" + playerIndex);
+        if (przeszkodaImg) przeszkodaImg.style.visibility= "hidden";
+        pokazKomunikat("Przeskoczyłeś przeszkodę! Nie zatrzymujesz się!");
+    }
+
+    function uzyjBenzyny() {
+        if (!boostUzyty) {
+            boostUzyty = true;
+            pozycje[playerIndex] += 200;
+
+            const kon = document.getElementById("konW-" + playerIndex);
+            if (kon) {
+                kon.style.left = pozycje[playerIndex] + "px";
+            }
+
+            document.getElementById("benzyna").disabled = true;
+            pokazKomunikat("Wypiłeś benzynę! Koń biegnie jak wściekły!");
+
+        }
+    }
+
+    function uzyjSmaru() {
+        if (!smarUzyty) {
+            smarUzyty = true;
+
+            // Losuj losowego konia
+            let target;
+            do {
+                target = Math.floor(Math.random() * @konieWyscigu.Count);
+            } while (target === playerIndex);
+
+            pozycje[target] = Math.max(0, pozycje[target] - 200);
+
+            const kon = document.getElementById("konW-" + target);
+            if (kon) {
+                kon.style.left = pozycje[target] + "px";
+            }
+
+            document.getElementById("smar").disabled = true;
+            pokazKomunikat("Wylano smar na tor przeciwnika! Spowolniony!");
+
+        }
+    }
+    function pokazKomunikat(tekst) {
+    const p = document.getElementById("komunikat");
+    if (p) {
+        p.innerHTML = tekst;
+    }
+    }
+
+
+    let wyscigInterval = setInterval(losujPrzeszkody, 2000);
+</script>
+
+
