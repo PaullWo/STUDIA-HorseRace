@@ -342,7 +342,7 @@ a{
     font-family:Impact;
 }
 .ikonka_wyloguj {
-    width: 100px;
+    width: 120px;
     height: 20px;
     border: black solid 3px;
     border-radius: 50px;
@@ -368,12 +368,6 @@ a{
     justify-content: center;
     align-items: center;
 }
-.user_body {
-    display: flex;
-    height: 90%;
-    width: 100%;
-    margin: 0px;
-}
 .zlota_podkowa{
     height:25px;
 }
@@ -384,7 +378,7 @@ a{
     border-radius: 50px;
     font-family: Impact;
     font-size: 18px;
-    background-color: white;
+    background: linear-gradient(180deg,#cccccc 0%, rgb(242, 241, 241) 60%);
     text-align: center;
     padding: 10px 5px;
     display: flex;
@@ -393,5 +387,157 @@ a{
     align-content: center;
     align-items: center;
     flex-direction: row;
-    gap:10px;
+    gap: 10px;
+}
+.user_body {
+    display: flex;
+    height: 90%;
+    width: 100%;
+    margin: 0px;
+}
+.user_body_lewy {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+}
+.div_info img {
+    width: 200px;
+    border: black solid 4px;
+    border-radius: 50px;
+    padding: 20px;
+    background: linear-gradient(180deg,#cccccc 0%, rgb(242, 241, 241) 60%);
+}
+.div_info {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 20px;
+    border-bottom: 4px solid black;
+    height:50%;
+    background-image:url(/images/drewno.png)
+}
+.div_info_srodek {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 270px;
+    background-color:white;
+    border: black solid 4px;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 16px;
+    font-family: Tahoma;
+}
+.div_praca {
+    height: 50%;
+    background-color: rgb(128, 128, 128);
+    width: 100%;
+    background: linear-gradient(360deg,#cccccc 0%, rgb(242, 241, 241) 60%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.p_praca {
+    display: flex;
+    gap: 10px;
+    font-family: Impact;
+    font-size: 22px;
+    margin-bottom:15px;
+}
+.ikonka_praca {
+    width: 280px;
+    height: 60px;
+    border: black solid 4px;
+    border-radius: 50px;
+    font-family: Impact;
+    font-size: 22px;
+    background-color: rgb(128, 128, 128);
+    margin-bottom:20px;
+    text-align: center;
+    padding: 10px 10px;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+.komunikat_praca {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: white;
+    border: black solid 3px;
+    border-radius: 50px;
+    padding: 5px 20px;
+    padding-top: 20px;
+    height: 180px;
+}
+.ikonka_ok {
+    width: 50px;
+    height: 20px;
+    border: black solid 3px;
+    border-radius: 50px;
+    font-family: Impact;
+    font-size: 18px;
+    background-color: #359b1d;
+    margin: 20px;
+    text-align: center;
+    padding: 10px 5px;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+.user_body_prawy {
+    width: 50%;
+    height: 100%;
+    border-left: 4px solid black;
+    background: linear-gradient(360deg,#cccccc 0%, rgb(242, 241, 241) 60%);
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+.ikonka_ranking {
+    width: 150px;
+    height: 30px;
+    border: black solid 4px;
+    border-radius: 50px;
+    font-family: Impact;
+    font-size: 22px;
+    background-color: #359b1d;
+    margin-bottom: 20px;
+    text-align: center;
+    padding: 10px 10px;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.lista_wyscigi {
+    height: 65%;
+    background-color: rgba(168, 168, 168, 1);
+    width: 80%;
+    margin: 20px;
+    border: black solid 4px;
+    border-radius: 5px;
 }

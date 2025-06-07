@@ -1,4 +1,6 @@
-﻿namespace HorseRace.Models
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+
+namespace HorseRace.Models
 {
     public class Uzytkownik
     {
@@ -6,6 +8,7 @@
 		{
             CzyMaKonia = false; // Domyślna wartość
             Wyscigi = new List<Wyscig>();
+			ZlotePodkowy = 1000;
         }
 		//Id
 		private int _id;
@@ -48,6 +51,7 @@
 		}
 
 		//Kolekcja wyścigów
+		[ValidateNever]
 		public ICollection<Wyscig> Wyscigi { get; set; }
 
 		private bool _czyMaKonia;
@@ -58,5 +62,21 @@
 			set { _czyMaKonia = value; }
 		}
 
-	}
+		//Zlote Podkowy waluta
+		private int _zlotePodkowy;
+
+		public int ZlotePodkowy
+		{
+			get { return _zlotePodkowy; }
+			set { _zlotePodkowy = value; }
+		}
+
+        //Czas ostatniego pracowania - złom
+        [ValidateNever]
+        public DateTime? OstatniaPracaZlom { get; set; }
+
+        //Czas ostatniego pracowania - stajnia
+        [ValidateNever]
+        public DateTime? OstatniaPracaStajnia { get; set; }
+    }
 }

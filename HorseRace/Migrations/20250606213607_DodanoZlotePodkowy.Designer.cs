@@ -4,6 +4,7 @@ using HorseRace.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HorseRace.Migrations
 {
     [DbContext(typeof(HorseRaceContext))]
-    partial class HorseRaceContextModelSnapshot : ModelSnapshot
+    [Migration("20250606213607_DodanoZlotePodkowy")]
+    partial class DodanoZlotePodkowy
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,9 +32,6 @@ namespace HorseRace.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("LiczbaWygranychWyscigow")
-                        .HasColumnType("int");
 
                     b.Property<int>("MaxSzybkosc")
                         .HasColumnType("int");
@@ -80,12 +80,6 @@ namespace HorseRace.Migrations
                     b.Property<string>("Login")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("OstatniaPracaStajnia")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("OstatniaPracaZlom")
-                        .HasColumnType("datetime2");
 
                     b.Property<int>("ZlotePodkowy")
                         .HasColumnType("int");

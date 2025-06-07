@@ -4,6 +4,7 @@ using HorseRace.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HorseRace.Migrations
 {
     [DbContext(typeof(HorseRaceContext))]
-    partial class HorseRaceContextModelSnapshot : ModelSnapshot
+    [Migration("20250606220508_DodanoLiczbeWygranychWyscigow")]
+    partial class DodanoLiczbeWygranychWyscigow
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -80,12 +83,6 @@ namespace HorseRace.Migrations
                     b.Property<string>("Login")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("OstatniaPracaStajnia")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("OstatniaPracaZlom")
-                        .HasColumnType("datetime2");
 
                     b.Property<int>("ZlotePodkowy")
                         .HasColumnType("int");

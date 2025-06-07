@@ -119,9 +119,15 @@ namespace HorseRace.Controllers
             return View();
         }
         [HttpGet]
-        public IActionResult PanelUser()
+        public IActionResult PanelUser(int id)
         {
-            return View();
+            var uzytkownik = _context.Uzytkownicy.FirstOrDefault(u => u.Id == id);
+            if (uzytkownik == null)
+            {
+                return NotFound();
+            }
+            ViewBag.Kon = _context.Konie.FirstOrDefault(k => k.WlascicielId == id);
+            return View(uzytkownik);
         }
         [HttpGet]
         public IActionResult Tor()
@@ -265,6 +271,13 @@ namespace HorseRace.Controllers
                 return NotFound();
             }
 
+            var wlasciciel = await _context.Uzytkownicy.FirstOrDefaultAsync(u => u.Id == kon.WlascicielId);
+            if (wlasciciel != null && !wlasciciel.CzyAdmin)
+            {
+                wlasciciel.CzyMaKonia = false;
+                _context.Uzytkownicy.Update(wlasciciel);
+            }
+
             _context.Konie.Remove(kon);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Stajnia));
@@ -286,6 +299,75 @@ namespace HorseRace.Controllers
         }
 
 
+        [HttpGet]
+        public async Task<IActionResult> PracaZlom(int id)
+        {
+            var uzytkownik = _context.Uzytkownicy.FirstOrDefault(k => k.Id == id);
+            if (uzytkownik == null)
+            {
+                return NotFound();
+            }
+            var teraz = DateTime.Now;
+
+            if (uzytkownik.OstatniaPracaZlom != null && (teraz - uzytkownik.OstatniaPracaZlom.Value).TotalMinutes < 60)
+            {
+                var pozostało = 60 - (teraz - uzytkownik.OstatniaPracaZlom.Value).TotalMinutes;
+                TempData["KomunikatPraca"] = $"Cały złom wyprzedany…  <br> Spróbuj ponownie za <strong>{Math.Ceiling(pozostało)} minut.</strong>";
+                return RedirectToAction("PanelUser", "HorseRace", new { id = uzytkownik.Id });
+            }
+
+            var rng = new Random();
+            int zarobek = rng.Next(50, 101);
+
+            string[] komunikaty =
+            {
+            "W stercie złomu znalazłeś coś błyszczącego – i opłaciło się!",
+            "Ktoś rozbił końmobil – zebrałeś mnóstwo części!",
+            "Znalazłeś leżący silnik V8 – koń był zachwycony!"
+            };
+            string komunikat = komunikaty[rng.Next(komunikaty.Length)];
+            uzytkownik.ZlotePodkowy += zarobek;
+            uzytkownik.OstatniaPracaZlom = teraz;
+            _context.SaveChanges();
+            TempData["KomunikatPraca"] = $"{komunikat} <br><strong>+{zarobek} <img src='/images/podkowa.png' class='zlota_podkowa' style='height: 20px;margin-top:20px;' /> </strong>";
+
+            return RedirectToAction("PanelUser", "HorseRace", new { id = uzytkownik.Id });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> PracaStajnia(int id)
+        {
+            var uzytkownik = _context.Uzytkownicy.FirstOrDefault(k => k.Id == id);
+            if (uzytkownik == null)
+            {
+                return NotFound();
+            }
+            var teraz = DateTime.Now;
+
+            if (uzytkownik.OstatniaPracaStajnia != null && (teraz - uzytkownik.OstatniaPracaStajnia.Value).TotalMinutes < 60)
+            {
+                var pozostało = 60 - (teraz - uzytkownik.OstatniaPracaStajnia.Value).TotalMinutes;
+                TempData["KomunikatPraca"] = $"Konie muszą odpocząć…  <br> Spróbuj ponownie za <strong>{Math.Ceiling(pozostało)} minut.</strong>";
+                return RedirectToAction("PanelUser", "HorseRace", new { id = uzytkownik.Id });
+            }
+
+            var rng = new Random();
+            int zarobek = rng.Next(100, 201);
+
+            string[] komunikaty =
+            {
+            "Uzupełniłeś zapasy paszy i oleju silnikowego. <br> Konie zadowolone, stajnia błyszczy.",
+            "Wyczyściłeś podkowy wszystkim koniom w stajni. <br>Grand Master dorzucił napiwek.",
+            "Znalazłeś zagubioną śrubę od starego Mustanga. <br> Podobno bez niej nie odpala."
+            };
+            string komunikat = komunikaty[rng.Next(komunikaty.Length)];
+            uzytkownik.ZlotePodkowy += zarobek;
+            uzytkownik.OstatniaPracaStajnia = teraz;
+            _context.SaveChanges();
+            TempData["KomunikatPraca"] = $"{komunikat} <br><strong>+{zarobek} <img src='/images/podkowa.png' class='zlota_podkowa' style='height: 20px;margin-top:20px;' /> </strong>";
+
+            return RedirectToAction("PanelUser", "HorseRace", new { id = uzytkownik.Id });
+        }
 
 
 

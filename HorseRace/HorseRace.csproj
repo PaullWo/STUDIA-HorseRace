@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\images\drewno.png" />
     <Content Remove="wwwroot\images\konie\Bialy.png" />
     <Content Remove="wwwroot\images\konie\Brazowy.png" />
     <Content Remove="wwwroot\images\konie\Czarny.png" />
@@ -15,10 +16,14 @@
     <Content Remove="wwwroot\images\Logo.png" />
     <Content Remove="wwwroot\images\Okno1.png" />
     <Content Remove="wwwroot\images\podkowa.png" />
+    <Content Remove="wwwroot\images\praca.png" />
     <Content Remove="wwwroot\images\Tlo.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="wwwroot\images\drewno.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="wwwroot\images\konie\Czarny.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
@@ -54,6 +59,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="wwwroot\images\podkowa.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="wwwroot\images\praca.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="wwwroot\images\Tlo.png">

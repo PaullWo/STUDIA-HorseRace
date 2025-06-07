@@ -6,6 +6,9 @@ namespace HorseRace.Models
 {
     public class Kon
     {
+        public Kon() {
+            LiczbaWygranychWyscigow = 0;
+        }
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Pole 'Nazwa' jest wymagane.")]
@@ -27,6 +30,9 @@ namespace HorseRace.Models
 
         //Wlasciciel
         public int WlascicielId { get; set; }
+
+        [ValidateNever]
+        public int LiczbaWygranychWyscigow { get; set; }
 
         [ValidateNever]
         public Uzytkownik Wlasciciel { get; set; }
