@@ -534,10 +534,124 @@ a{
 }
 
 .lista_wyscigi {
-    height: 65%;
+    height: 80%;
     background-color: rgba(168, 168, 168, 1);
     width: 80%;
     margin: 20px;
     border: black solid 4px;
     border-radius: 5px;
+}
+
+/*Ranking*/
+.user_ranking {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+.div_ranking {
+    height: 80%;
+    width: 80%;
+    margin-bottom: 20px;
+    background-color: rgba(168, 168, 168, 1);
+    border: black solid 4px;
+    border-radius: 5px;
+    display:flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    background-image:url(/images/tlo2.png);
+    background-position:center;
+    background-size:cover;
+}
+.div_ranking2 {
+    height: 80%;
+    width: 90%;
+    margin-bottom: 0px;
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+.div_podium {
+    width: 700px;
+    height: 90%;
+    position: relative;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    padding-top:150px;
+}
+.kon3, .kon2, .kon1{
+    position:absolute;
+    top:0px;
+    left:0px;
+}
+
+.kon1{
+    top:50px;
+    left:240px;
+}
+.kon2 {
+    top: 118px;
+    left: 70px;
+}
+.kon3 {
+    top: 138px;
+    left: 410px;
+}
+.p_ranking{
+    padding-top:-50px !important;
+}
+.karta_wyscig {
+    border: black solid 4px;
+    border-radius: 5px;
+    display: flex;
+    background: linear-gradient(360deg,#FFFFFF 40%, red 100%);
+    font-size: 16px;
+    flex-direction: column;
+    padding: 8px 10px;
+    margin-bottom: 5px;
+    text-align: center;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    background-image:url(/images/flaga.jpg);
+    background-size:cover;
+}
+.opis_wyscigu {
+    display: flex;
+    gap: 20px;
+    text-align: center;
+    justify-content: center;
+    align-content: center;
+    background-color: white;
+    border-radius: 5px;
+    border: black solid 4px;
+    padding:5px;
+}
+.btn_udzial {
+    width: 120px;
+    height: 18px;
+    border: black solid 3px;
+    border-radius: 50px;
+    font-family: Impact;
+    font-size: 18px;
+    background-color: #359b1d;
+    text-align: center;
+    padding: 7px 10px;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    flex-direction: row;
 }

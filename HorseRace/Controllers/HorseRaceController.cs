@@ -28,7 +28,7 @@ namespace HorseRace.Controllers
         {
             var uzytkownik = _context.Uzytkownicy.FirstOrDefault(u => u.Login == login
             && u.Haslo == haslo);
-            if ( uzytkownik != null)
+            if (uzytkownik != null)
             {
                 if (uzytkownik.CzyAdmin)
                 {
@@ -40,7 +40,8 @@ namespace HorseRace.Controllers
                     {
                         return RedirectToAction("NowyUserPanel", "HorseRace", new { id = uzytkownik.Id });
                     }
-                    else {
+                    else
+                    {
                         return RedirectToAction("PanelUser", "HorseRace", new { id = uzytkownik.Id });
                     }
                 }
@@ -55,7 +56,7 @@ namespace HorseRace.Controllers
             return View(uzytkownik);
         }
         [HttpPost]
-        public IActionResult NowyUserPanel(int id,string WybranyKolor,string nazwa)
+        public IActionResult NowyUserPanel(int id, string WybranyKolor, string nazwa)
         {
             var uzytkownik = _context.Uzytkownicy.FirstOrDefault(u => u.Id == id);
             if (uzytkownik == null)
@@ -65,12 +66,12 @@ namespace HorseRace.Controllers
             else
             {
                 Umaszczenie umaszczenie = Enum.Parse<Umaszczenie>(WybranyKolor);
-                Kon kon = new Kon { Nazwa = nazwa, Umaszczenie = umaszczenie, MaxWytrzymalosc = 100, MaxSzybkosc = 100, Wlasciciel=uzytkownik };
+                Kon kon = new Kon { Nazwa = nazwa, Umaszczenie = umaszczenie, MaxWytrzymalosc = 100, MaxSzybkosc = 100, Wlasciciel = uzytkownik };
                 _context.Konie.Add(kon);
                 uzytkownik.CzyMaKonia = true;
                 _context.SaveChanges();
             }
-                return RedirectToAction("PanelUser", "HorseRace", new { id = uzytkownik.Id });
+            return RedirectToAction("PanelUser", "HorseRace", new { id = uzytkownik.Id });
         }
         [HttpGet]
         public IActionResult Rejestracja()
@@ -119,14 +120,58 @@ namespace HorseRace.Controllers
             return View();
         }
         [HttpGet]
-        public IActionResult PanelUser(int id)
+        public IActionResult PanelUser(int id, string sortOrder= "", int page = 1, int pageSize = 3)
         {
             var uzytkownik = _context.Uzytkownicy.FirstOrDefault(u => u.Id == id);
             if (uzytkownik == null)
             {
                 return NotFound();
             }
+
             ViewBag.Kon = _context.Konie.FirstOrDefault(k => k.WlascicielId == id);
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParam = String.IsNullOrEmpty(sortOrder) ? "nazwa_desc" : "";
+            ViewBag.LevelSortParam = sortOrder == "poziom" ? "poziom_desc" : "poziom";
+
+            var wyscigiQuery = _context.Wyscigi
+                .Where(w => !w.CzyZrealizowany);
+
+            // Sortowanie
+            switch (sortOrder)
+            {
+                case "nazwa_desc":
+                    wyscigiQuery = wyscigiQuery.OrderByDescending(w => w.Nazwa);
+                    break;
+                case "poziom":
+                    wyscigiQuery = wyscigiQuery.OrderBy(w => w.PoziomTrudnosci);
+                    break;
+                case "poziom_desc":
+                    wyscigiQuery = wyscigiQuery.OrderByDescending(w => w.PoziomTrudnosci);
+                    break;
+                default:
+                    wyscigiQuery = wyscigiQuery.OrderBy(w => w.Nazwa);
+                    break;
+            }
+
+            // Paginacja
+            int totalItems = wyscigiQuery.Count();
+            var wyscigi = wyscigiQuery
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .Select(w => new
+                {
+                    w.Id,
+                    w.Nazwa,
+                    w.Koszt,
+                    w.Nagroda,
+                    w.PoziomTrudnosci
+                })
+                .ToList();
+
+            ViewBag.TotalPages = (int)Math.Ceiling((double)totalItems / pageSize);
+            ViewBag.CurrentPage = page;
+            ViewBag.Wyscigi = wyscigi;
+
             return View(uzytkownik);
         }
         [HttpGet]
@@ -202,7 +247,7 @@ namespace HorseRace.Controllers
                 return RedirectToAction(nameof(Stajnia));
             }
 
-           
+
             Console.WriteLine("BŁAD");
             ViewBag.UmaszczenieList = new SelectList(Enum.GetValues(typeof(Umaszczenie)));
             return View(kon);
@@ -369,7 +414,52 @@ namespace HorseRace.Controllers
             return RedirectToAction("PanelUser", "HorseRace", new { id = uzytkownik.Id });
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Ranking(int id)
+        {
+            var uzytkownik = _context.Uzytkownicy.FirstOrDefault(k => k.Id == id);
+            if (uzytkownik == null)
+            {
+                return NotFound();
+            }
 
+            var wszystkieKonie = await _context.Konie
+                .OrderByDescending(k => k.LiczbaWygranychWyscigow)
+                .ToListAsync();
 
+            ViewBag.TopKonie = wszystkieKonie.Take(3).ToList();
+
+            var konGracza = wszystkieKonie.FirstOrDefault(k => k.WlascicielId == id);
+
+            int? miejsce = null;
+            if (konGracza != null)
+            {
+                miejsce = wszystkieKonie.IndexOf(konGracza) + 1;
+            }
+
+            ViewBag.MiejsceGracza = miejsce;
+
+            return View(uzytkownik);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Wyscig(int id,int wyscigID)
+        {
+            var uzytkownik = _context.Uzytkownicy.FirstOrDefault(k => k.Id == id);
+            if (uzytkownik == null)
+            {
+                return NotFound();
+            }
+
+            var wyscig = _context.Wyscigi.FirstOrDefault(k => k.Id == id);
+            if (wyscig == null)
+            {
+                return NotFound();
+            }
+
+            ViewBag.Wyscig = wyscig;
+
+            return View(uzytkownik);
+        }
     }
 }

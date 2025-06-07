@@ -1,0 +1,52 @@
+﻿@model HorseRace.Models.Uzytkownik
+
+@{
+    ViewData["Title"] = "Ranking";
+    var topKonie = ViewBag.TopKonie as List<HorseRace.Models.Kon>;
+}
+<div class="okno_glowne">
+    <div class="okno_gra">
+        <div class="menu">
+            <div class="pusty">
+            </div>
+            <div class="div_logo">
+                <img class="logo_mniejsze" src="~/images/Logo.png" />
+            </div>
+            <div class="ikonki">
+                <div class="ikonka_kasa"><img src="/images/podkowa.png" class="zlota_podkowa" /> @Model.ZlotePodkowy</div>
+                <a asp-controller="HorseRace" asp-action="Index" class="ikonka_wyloguj">WYLOGUJ SIĘ</a>
+            </div>
+        </div>
+        <div class="user_body user_ranking">
+            <div class="div_ranking">
+                <div class ="div_ranking2">
+                    <img src="/images/puchar.png" style="width:120px;padding-top:150px;" />
+                <div class="div_podium">
+                    <div class="kon1">
+                            <strong>@topKonie[0].Nazwa</strong><br />
+                            Wygarne: <strong> @topKonie[0].LiczbaWygranychWyscigow</strong><br />
+                            <img src="~/images/konie/@($"{@topKonie[0].Umaszczenie}.png")" style="width:150px;" />
+                    </div>
+                    <div class="kon2">
+                            <strong>@topKonie[1].Nazwa</strong><br />
+                            Wygarne: <strong> @topKonie[1].LiczbaWygranychWyscigow</strong><br />
+                            <img src="~/images/konie/@($"{@topKonie[1].Umaszczenie}.png")" style="width:150px;" />
+                    </div>
+                    <div class="kon3">
+                            <strong>@topKonie[2].Nazwa</strong><br />
+                            Wygarne: <strong> @topKonie[2].LiczbaWygranychWyscigow</strong><br />
+                            <img src="~/images/konie/@($"{@topKonie[2].Umaszczenie}.png")" style="width:150px;" />
+                     </div>
+                    <img src="/images/podium.png" style="width:500px;" />
+                </div>
+                    <img src="/images/puchar.png" style="width:120px;padding-top:150px;" />
+                </div>
+                <div div="p_ranking">
+                Twoje miejsce w rankingu: <strong> @ViewBag.MiejsceGracza</strong>
+                </div>
+            </div>
+            <a asp-controller="HorseRace" asp-action="PanelUser" asp-route-id="@Model.Id" style="font-weight:600;">Cofnij</a>
+        </div>
+    </div>
+
+</div>

@@ -52,15 +52,57 @@
                 <p class="p_praca" style="font-size: 32px;">DOSTĘPNE WYŚCIGI</p>
                 <p class="p_sortuj">
                     Sortuj według:<strong>
-                        <a>Nazwa</a> |
-                        <a>Poziom trudności</a>
+                        <a asp-action="PanelUser" asp-route-id="@Model.Id" asp-route-sortOrder="@ViewBag.NameSortParam">Nazwa</a> |
+                        <a asp-action="PanelUser" asp-route-id="@Model.Id" asp-route-sortOrder="@ViewBag.LevelSortParam">Poziom trudności</a>
                     </strong>
                 </p>
                 <div class="lista_wyscigi">
+                        @if (ViewBag.Wyscigi != null && ViewBag.Wyscigi.Count > 0)
+                        {
+                            @foreach (var wyscig in ViewBag.Wyscigi)
+                            {
+                                <div class="karta_wyscig">
+                                    <div class="opis_wyscigu">
+                                        <span>
+                                            <strong>Nazwa</strong><br />
+                                            @wyscig.Nazwa
+                                        </span>
+                                        <span>
+                                            <strong>Trudność</strong><br />
+                                            @wyscig.PoziomTrudnosci
+                                        </span>
+                                        <span>
+                                            <strong>Wpisowe</strong><br />
+                                        @wyscig.Koszt <img src="/images/podkowa.png" class="zlota_podkowa" style="height:15px"/>
+                                        </span>
+                                        <span>
+                                            <strong>Wygrana</strong><br />
+                                        @wyscig.Nagroda <img src="/images/podkowa.png" class="zlota_podkowa" style="height:15px" />
+                                        </span>
+                                    </div>
+                                    <a asp-action="Wyscig" asp-route-id="@Model.Id" asp-route-wyscigID="@wyscig.Id" class="btn_udzial">WEŹ UDZIAŁ</a>
+                                </div>
+                            }
 
-                    1 2 3
+                        }
+                    @if (ViewBag.TotalPages > 1)
+                    {
+                        <div class="pagination">
+                            @for (int i = 1; i <= ViewBag.TotalPages; i++)
+                            {
+                                if (i == ViewBag.CurrentPage)
+                                {
+                                    <strong>@i</strong>
+                                }
+                                else
+                                {
+                                    <a asp-action="PanelUser" asp-route-id="@Model.Id" asp-route-page="@i" asp-route-sortOrder="@ViewBag.CurrentSort">@i</a>
+                                }
+                            }
+                        </div>
+                    }
                 </div>
-                <a asp-controller="HorseRace" asp-action="PracaZlom" asp-route-id="@Model.Id" class="ikonka_ranking">RANKING</a>
+                <a asp-controller="HorseRace" asp-action="Ranking" asp-route-id="@Model.Id" class="ikonka_ranking">RANKING</a>
             </div>
         </div>
     </div>

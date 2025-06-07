@@ -31,11 +31,11 @@ namespace HorseRace.Data
 
             var konie = new Kon[]
             {
-            new Kon{Nazwa="ToyotaYaris",Umaszczenie=Umaszczenie.Toyota,MaxWytrzymalosc=200,MaxSzybkosc=70,Wlasciciel=admin},
+            new Kon{Nazwa="ToyotaYaris",Umaszczenie=Umaszczenie.Toyota,MaxWytrzymalosc=200,MaxSzybkosc=70,Wlasciciel=admin,LiczbaWygranychWyscigow=5},
             new Kon{Nazwa="Kasztanka",Umaszczenie=Umaszczenie.Brazowy,MaxWytrzymalosc=250,MaxSzybkosc=50,Wlasciciel=admin},
             new Kon{Nazwa="Mustang",Umaszczenie=Umaszczenie.Czarny,MaxWytrzymalosc=150,MaxSzybkosc=90,Wlasciciel=admin},
-            new Kon{Nazwa="RB21",Umaszczenie=Umaszczenie.Czerwony,MaxWytrzymalosc=200,MaxSzybkosc=90,Wlasciciel=admin},
-            new Kon{Nazwa="White McQueen",Umaszczenie=Umaszczenie.Bialy,MaxWytrzymalosc=180,MaxSzybkosc=80,Wlasciciel=admin}
+            new Kon{Nazwa="RB21",Umaszczenie=Umaszczenie.Czerwony,MaxWytrzymalosc=200,MaxSzybkosc=90,Wlasciciel=admin,LiczbaWygranychWyscigow=3},
+            new Kon{Nazwa="White McQueen",Umaszczenie=Umaszczenie.Bialy,MaxWytrzymalosc=180,MaxSzybkosc=80,Wlasciciel=admin,LiczbaWygranychWyscigow=2}
             };
             foreach (Kon k in konie)
             {

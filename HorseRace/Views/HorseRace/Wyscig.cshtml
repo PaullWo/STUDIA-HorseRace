@@ -1,0 +1,24 @@
+﻿@model HorseRace.Models.Uzytkownik
+
+@{
+    ViewData["Title"] = "Wyścig";
+}
+<div class="okno_glowne">
+    <div class="okno_gra">
+        <div class="menu">
+            <div class="pusty">
+            </div>
+            <div class="div_logo">
+                <img class="logo_mniejsze" src="~/images/Logo.png" />
+            </div>
+            <div class="ikonki">
+                <div class="ikonka_kasa"><img src="/images/podkowa.png" class="zlota_podkowa" /> @Model.ZlotePodkowy</div>
+                <a asp-controller="HorseRace" asp-action="Index" class="ikonka_wyloguj">WYLOGUJ SIĘ</a>
+            </div>
+        </div>
+        <div class="user_body">
+            
+        </div>
+    </div>
+
+</div>
