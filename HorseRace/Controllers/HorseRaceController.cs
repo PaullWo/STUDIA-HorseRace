@@ -311,12 +311,18 @@ namespace HorseRace.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> UsunKoniaPotwierdzone(int id)
         {
-            var kon = await _context.Konie.FindAsync(id);
+            var kon = await _context.Konie
+            .Include(k => k.Wyscigi)
+            .FirstOrDefaultAsync(k => k.Id == id);
             if (kon == null)
             {
                 return NotFound();
             }
-
+            if (kon.Wyscigi != null && kon.Wyscigi.Count > 0)
+            {
+                TempData["KomunikatAlert"] = "Nie mozna usunac konia, poniewaz bierze udzial w wyscigu!";
+                return RedirectToAction(nameof(Stajnia));
+            }
             var wlasciciel = await _context.Uzytkownicy.FirstOrDefaultAsync(u => u.Id == kon.WlascicielId);
             if (wlasciciel != null && !wlasciciel.CzyAdmin)
             {
@@ -598,7 +604,7 @@ namespace HorseRace.Controllers
                 return RedirectToAction("PanelAdmin");
             }
 
-            return View();
+            return RedirectToAction("PanelAdmin");
         }
     }
 }

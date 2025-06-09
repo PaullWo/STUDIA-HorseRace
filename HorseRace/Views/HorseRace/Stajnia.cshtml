@@ -58,8 +58,15 @@
                     <a asp-action="Stajnia" asp-route-page="@i" asp-route-sortOrder="@ViewBag.SortOrder" asp-route-searchString="@ViewBag.SearchString">@i</a>
                 }
             }
+            
         </div>
         <a asp-action="DodajKonia" class="btn btn-success"> >>Dodaj nowego konia<< </a>
         <a asp-controller="HorseRace" asp-action="PanelAdmin" style="font-weight:600;">Cofnij</a>
     </div>
 </div>
+@if (TempData["KomunikatAlert"] != null)
+{
+    <script>
+        alert('@TempData["KomunikatAlert"]');
+    </script>
+}
